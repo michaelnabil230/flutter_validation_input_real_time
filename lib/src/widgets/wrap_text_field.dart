@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_validation_input_real_time/src/input.dart';
+import 'package:flutter_validation_input_real_time/src/classes/input.dart';
 import 'package:flutter_validation_input_real_time/src/rules/rule.dart';
 import 'package:flutter_validation_input_real_time/src/validation_text_editing_controller.dart';
 import 'package:flutter_validation_input_real_time/src/widgets/validation_form.dart';
@@ -10,7 +10,7 @@ class WrapTextField extends StatefulWidget {
 
   final List<Rule> rules;
 
-  final Widget Function(Input input) textField;
+  final Widget Function(Input input) child;
 
   final ValidationTextEditingController controller;
 
@@ -18,7 +18,7 @@ class WrapTextField extends StatefulWidget {
     super.key,
     required this.name,
     required this.rules,
-    required this.textField,
+    required this.child,
     required this.controller,
   });
 
@@ -29,21 +29,27 @@ class WrapTextField extends StatefulWidget {
 class WrapTextFieldState extends State<WrapTextField> {
   ValidationTextEditingController get controller => widget.controller;
 
-  Input get _initialData =>
-      Input(name: widget.name, value: controller.text, rules: widget.rules);
+  late Input _initialData;
 
-  late final BehaviorSubject<Input> _inputStream =
-      BehaviorSubject.seeded(_initialData);
+  late BehaviorSubject<Input> _inputStream;
 
   @override
   void initState() {
+    _initialData = Input(
+      name: widget.name,
+      value: controller.text,
+      rules: widget.rules,
+    );
+
+    _inputStream = BehaviorSubject.seeded(_initialData);
+
     ValidationFormState? form = ValidationForm.maybeOf(context);
 
-    controller.initValidation(form!.streamInputs, _inputStream);
+    controller.initValidation(_inputStream);
 
-    form.register(this);
+    form?.register(this);
 
-    _inputStream.listen((_) => form.fieldIsChanged());
+    controller.addListener(() => _runValidation(form));
 
     super.initState();
   }
@@ -57,13 +63,23 @@ class WrapTextFieldState extends State<WrapTextField> {
     super.dispose();
   }
 
+  void _runValidation(ValidationFormState? form) {
+    List<Input> inputs = form!.streamInputs
+        .map((BehaviorSubject<Input> stream) => stream.value)
+        .toList();
+
+    Input input = _inputStream.value.runValidation(inputs, controller.text);
+    _inputStream.add(input);
+
+    form.fieldIsChanged();
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<Input>(
-      stream: controller.inputStream,
+      stream: _inputStream,
       initialData: _initialData,
-      builder: (context, snapshot) =>
-          widget.textField.call(snapshot.requireData),
+      builder: (context, snapshot) => widget.child.call(snapshot.requireData),
     );
   }
 }

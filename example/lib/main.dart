@@ -39,7 +39,13 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Welcome to the real-time validator'),
         ),
         body: ValidationForm(
-          onChanged: (bool isPass) => print('Is pass $isPass'),
+          onChanged: (bool passes) {
+            if (passes) {
+              print('The from can passes');
+              return;
+            }
+            print('The from can\'t passes');
+          },
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
@@ -52,7 +58,7 @@ class _MyAppState extends State<MyApp> {
                     IsRequired(),
                     IsEmail(),
                   ],
-                  textField: (input) {
+                  child: (input) {
                     return CustomTextField(
                       controller: _emailController,
                       hintText: 'Email',
@@ -68,7 +74,7 @@ class _MyAppState extends State<MyApp> {
                     IsRequired(),
                     Password(min: 3),
                   ],
-                  textField: (input) {
+                  child: (input) {
                     return CustomTextField(
                       controller: _passwordController,
                       hintText: 'Password',
@@ -85,7 +91,7 @@ class _MyAppState extends State<MyApp> {
                     Password(min: 3),
                     ConfirmedPassword('password'),
                   ],
-                  textField: (input) {
+                  child: (input) {
                     return CustomTextField(
                       controller: _passwordConfirmationController,
                       hintText: 'Password confirmation',
@@ -96,20 +102,34 @@ class _MyAppState extends State<MyApp> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: InkWell(
-                    onTap: () {
-                      print('Login');
+                  child: WrapButtonSubmit(
+                    inputs: [
+                      _emailController,
+                      _passwordController,
+                      _passwordConfirmationController,
+                    ],
+                    child: (ButtonFromData buttonFromData) {
+                      return InkWell(
+                        onTap: () {
+                          if (!buttonFromData.isDisable) {
+                            print('Login');
+                            return;
+                          }
+
+                          print('Please fill the inputs first');
+                        },
+                        child: Container(
+                          height: 58,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: Colors.amber,
+                          ),
+                          alignment: Alignment.center,
+                          child: const Text('Login'),
+                        ),
+                      );
                     },
-                    child: Container(
-                      height: 58,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Colors.amber,
-                      ),
-                      alignment: Alignment.center,
-                      child: const Text('Login'),
-                    ),
                   ),
                 )
               ],
@@ -147,27 +167,23 @@ class CustomTextField extends StatelessWidget {
         child: TextField(
           controller: controller,
           keyboardType: keyboardType,
-          style: TextStyle(
-            color: input.fails ? Colors.red : Colors.green,
-          ),
+          style: TextStyle(color: color),
           decoration: InputDecoration(
             hintText: hintText,
-            hintStyle: TextStyle(
-              color: input.fails ? Colors.red : Colors.green,
-            ),
+            hintStyle: TextStyle(color: color),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15.0),
-              borderSide: BorderSide.none,
+              borderSide: const BorderSide(color: Colors.black),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15.0),
-              borderSide: BorderSide(color: _getColor(input.passes)),
+              borderSide: BorderSide(color: color),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15.0),
-              borderSide: BorderSide(color: _getColor(input.passes)),
+              borderSide: BorderSide(color: color),
             ),
-            errorText: input.errorMassage,
+            errorText: input.error,
             errorStyle: const TextStyle(
               color: Colors.red,
               fontWeight: FontWeight.w400,
@@ -187,11 +203,15 @@ class CustomTextField extends StatelessWidget {
     );
   }
 
-  Color _getColor(bool isPass) {
-    if (!isPass) {
+  Color get color {
+    if (input.hasError) {
       return Colors.red;
     }
 
-    return Colors.green;
+    if (input.passes) {
+      return Colors.green;
+    }
+
+    return Colors.black;
   }
 }
