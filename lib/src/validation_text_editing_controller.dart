@@ -13,11 +13,17 @@ class ValidationTextEditingController extends TextEditingController {
     inputStream.add(inputStream.value.setError(errorText));
   }
 
-  void reset() => setError(null);
+  void clearError() => setError(null);
 
   void runValidation() {
     Input input = inputStream.value.runValidation(text);
     inputStream.add(input);
+  }
+
+  @override
+  void clear() {
+    super.clear();
+    clearError();
   }
 
   @override

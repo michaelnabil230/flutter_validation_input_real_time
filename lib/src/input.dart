@@ -39,21 +39,21 @@ class Input {
   @override
   String toString() => 'Input(name: $name)';
 
-  Input setOldValues(List<String>? oldValues) {
+  Input setOldValues(List<String>? oldValues) => copyWith(oldValues: oldValues);
+
+  Input setError(String? errorMassage) => copyWith(errorMassage: errorMassage);
+
+  Input copyWith({
+    String? name,
+    List<Rule>? rules,
+    List<String>? oldValues,
+    String? errorMassage,
+  }) {
     return Input(
-      name: name,
+      name: name ?? this.name,
+      rules: rules ?? this.rules,
       oldValues: oldValues ?? this.oldValues,
       errorMassage: errorMassage,
-      rules: rules,
-    );
-  }
-
-  Input setError(String? errorMassage) {
-    return Input(
-      name: name,
-      oldValues: oldValues,
-      errorMassage: errorMassage ?? this.errorMassage,
-      rules: rules,
     );
   }
 }

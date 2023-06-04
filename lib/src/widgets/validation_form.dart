@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_validation_input_real_time/src/widgets/text_field_custom.dart';
+import 'package:flutter_validation_input_real_time/src/widgets/wrap_text_field.dart';
 
 class ValidationForm extends StatefulWidget {
   final Widget child;
@@ -20,11 +20,11 @@ class ValidationForm extends StatefulWidget {
 }
 
 class ValidationFormState extends State<ValidationForm> {
-  final Set<TextFieldCustomState> _fields = <TextFieldCustomState>{};
+  final Set<WrapTextFieldState> _fields = <WrapTextFieldState>{};
 
-  void register(TextFieldCustomState field) => _fields.add(field);
+  void register(WrapTextFieldState field) => _fields.add(field);
 
-  void unregister(TextFieldCustomState field) => _fields.remove(field);
+  void unregister(WrapTextFieldState field) => _fields.remove(field);
 
   void fieldIsChanged() => widget.onChanged.call(isPass);
 

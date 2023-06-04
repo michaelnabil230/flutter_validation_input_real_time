@@ -36,44 +36,60 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Welcome to the real-time validator'),
         ),
         body: ValidationForm(
-          onChanged: (bool isPass) {
-            print('Is pass $isPass');
-          },
+          onChanged: (bool isPass) => print('Is pass $isPass'),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                TextFieldCustom(
+                WrapTextField(
                   name: 'email',
-                  hintText: 'Email',
                   controller: _emailController,
-                  keyboardType: TextInputType.emailAddress,
                   rules: [
                     IsRequired(),
                     IsEmail(),
                   ],
+                  textField: (input) {
+                    return CustomTextField(
+                      controller: _emailController,
+                      hintText: 'Email',
+                      input: input,
+                      keyboardType: TextInputType.emailAddress,
+                    );
+                  },
                 ),
-                TextFieldCustom(
+                WrapTextField(
                   name: 'password',
-                  hintText: 'Password',
                   controller: _passwordController,
-                  keyboardType: TextInputType.visiblePassword,
                   rules: [
                     IsRequired(),
                     RangeLength(min: 8, max: 12),
                   ],
-                ),
-                InkWell(
-                  onTap: () {
-                    print('Login');
+                  textField: (input) {
+                    return CustomTextField(
+                      controller: _passwordController,
+                      hintText: 'Password',
+                      input: input,
+                      keyboardType: TextInputType.visiblePassword,
+                    );
                   },
-                  child: Container(
-                    height: 50,
-                    width: double.infinity,
-                    color: Colors.amber,
-                    alignment: Alignment.center,
-                    child: const Text('Login'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: InkWell(
+                    onTap: () {
+                      print('Login');
+                    },
+                    child: Container(
+                      height: 58,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Colors.amber,
+                      ),
+                      alignment: Alignment.center,
+                      child: const Text('Login'),
+                    ),
                   ),
                 )
               ],
@@ -82,5 +98,80 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
     );
+  }
+}
+
+class CustomTextField extends StatelessWidget {
+  final Input input;
+
+  final String hintText;
+
+  final ValidationTextEditingController controller;
+
+  final TextInputType keyboardType;
+
+  const CustomTextField({
+    super.key,
+    required this.controller,
+    required this.keyboardType,
+    required this.input,
+    required this.hintText,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedSize(
+      duration: const Duration(milliseconds: 400),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: TextField(
+          controller: controller,
+          keyboardType: keyboardType,
+          style: TextStyle(
+            color: input.isNotPass ? Colors.red : Colors.green,
+          ),
+          decoration: InputDecoration(
+            hintText: hintText,
+            hintStyle: TextStyle(
+              color: input.isNotPass ? Colors.red : Colors.green,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15.0),
+              borderSide: BorderSide.none,
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15.0),
+              borderSide: BorderSide(color: _getColor(input.isPass)),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15.0),
+              borderSide: BorderSide(color: _getColor(input.isPass)),
+            ),
+            errorText: input.errorMassage,
+            errorStyle: const TextStyle(
+              color: Colors.red,
+              fontWeight: FontWeight.w400,
+              fontSize: 10.0,
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15.0),
+              borderSide: const BorderSide(color: Colors.red),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15.0),
+              borderSide: const BorderSide(color: Colors.red),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Color _getColor(bool isPass) {
+    if (!isPass) {
+      return Colors.red;
+    }
+
+    return Colors.green;
   }
 }
