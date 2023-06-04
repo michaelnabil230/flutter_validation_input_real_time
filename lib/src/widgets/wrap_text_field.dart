@@ -29,22 +29,21 @@ class WrapTextField extends StatefulWidget {
 class WrapTextFieldState extends State<WrapTextField> {
   ValidationTextEditingController get controller => widget.controller;
 
-  Input get _initialData => Input(name: widget.name, rules: widget.rules);
+  Input get _initialData =>
+      Input(name: widget.name, value: controller.text, rules: widget.rules);
 
   late final BehaviorSubject<Input> _inputStream =
       BehaviorSubject.seeded(_initialData);
 
   @override
   void initState() {
-    controller.setInputStream(_inputStream);
-
     ValidationFormState? form = ValidationForm.maybeOf(context);
 
-    form?.register(this);
+    controller.initValidation(form!.streamInputs, _inputStream);
 
-    _inputStream.listen((_) {
-      form?.fieldIsChanged();
-    });
+    form.register(this);
+
+    _inputStream.listen((_) => form.fieldIsChanged());
 
     super.initState();
   }

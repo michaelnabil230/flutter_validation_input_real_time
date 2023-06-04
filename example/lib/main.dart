@@ -13,11 +13,13 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   late ValidationTextEditingController _emailController;
   late ValidationTextEditingController _passwordController;
+  late ValidationTextEditingController _passwordConfirmationController;
 
   @override
   void initState() {
     _emailController = ValidationTextEditingController();
     _passwordController = ValidationTextEditingController();
+    _passwordConfirmationController = ValidationTextEditingController();
     super.initState();
   }
 
@@ -25,6 +27,7 @@ class _MyAppState extends State<MyApp> {
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _passwordConfirmationController.dispose();
     super.dispose();
   }
 
@@ -63,12 +66,29 @@ class _MyAppState extends State<MyApp> {
                   controller: _passwordController,
                   rules: [
                     IsRequired(),
-                    RangeLength(min: 8, max: 12),
+                    Password(min: 3),
                   ],
                   textField: (input) {
                     return CustomTextField(
                       controller: _passwordController,
                       hintText: 'Password',
+                      input: input,
+                      keyboardType: TextInputType.visiblePassword,
+                    );
+                  },
+                ),
+                WrapTextField(
+                  name: 'password_confirmation',
+                  controller: _passwordConfirmationController,
+                  rules: [
+                    IsRequired(),
+                    Password(min: 3),
+                    ConfirmedPassword('password'),
+                  ],
+                  textField: (input) {
+                    return CustomTextField(
+                      controller: _passwordConfirmationController,
+                      hintText: 'Password confirmation',
                       input: input,
                       keyboardType: TextInputType.visiblePassword,
                     );
@@ -128,12 +148,12 @@ class CustomTextField extends StatelessWidget {
           controller: controller,
           keyboardType: keyboardType,
           style: TextStyle(
-            color: input.isNotPass ? Colors.red : Colors.green,
+            color: input.fails ? Colors.red : Colors.green,
           ),
           decoration: InputDecoration(
             hintText: hintText,
             hintStyle: TextStyle(
-              color: input.isNotPass ? Colors.red : Colors.green,
+              color: input.fails ? Colors.red : Colors.green,
             ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15.0),
@@ -141,11 +161,11 @@ class CustomTextField extends StatelessWidget {
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15.0),
-              borderSide: BorderSide(color: _getColor(input.isPass)),
+              borderSide: BorderSide(color: _getColor(input.passes)),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15.0),
-              borderSide: BorderSide(color: _getColor(input.isPass)),
+              borderSide: BorderSide(color: _getColor(input.passes)),
             ),
             errorText: input.errorMassage,
             errorStyle: const TextStyle(

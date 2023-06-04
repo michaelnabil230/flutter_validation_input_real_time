@@ -7,16 +7,28 @@ class ValidationTextEditingController extends TextEditingController {
 
   late BehaviorSubject<Input> inputStream;
 
-  void setInputStream(BehaviorSubject<Input> stream) => inputStream = stream;
+  late List<BehaviorSubject<Input>> _streamInputs;
+
+  List<Input> get _inputs => _streamInputs
+      .map((BehaviorSubject<Input> stream) => stream.value)
+      .toList();
+
+  void initValidation(List<BehaviorSubject<Input>> streamInputs,
+      BehaviorSubject<Input> stream) {
+    inputStream = stream;
+    _streamInputs = streamInputs;
+  }
 
   void setError(String? errorText) {
     inputStream.add(inputStream.value.setError(errorText));
   }
 
-  void clearError() => setError(null);
+  void clearError() {
+    inputStream.add(inputStream.value.copyWith(value: '', errorMassage: null));
+  }
 
-  void runValidation() {
-    Input input = inputStream.value.runValidation(text);
+  void _runValidation() {
+    Input input = inputStream.value.runValidation(_inputs, text);
     inputStream.add(input);
   }
 
@@ -30,7 +42,7 @@ class ValidationTextEditingController extends TextEditingController {
   set value(TextEditingValue newValue) {
     super.value = newValue;
 
-    runValidation();
+    _runValidation();
   }
 
   @override

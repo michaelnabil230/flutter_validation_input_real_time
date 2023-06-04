@@ -3,7 +3,7 @@ import 'package:flutter_validation_input_real_time/src/rules/rule.dart';
 class RegExpRule extends Rule {
   final RegExp regX;
 
-  const RegExpRule(this.regX);
+  RegExpRule(this.regX);
 
   @override
   bool isValid(String value) => regX.hasMatch(value);

@@ -1,6 +1,6 @@
 import 'package:flutter_validation_input_real_time/src/rules/rule.dart';
 
-class IsOptional extends Rule {
+class Sometimes extends Rule {
   @override
   bool isValid(String value) => true;
 

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_validation_input_real_time/src/input.dart';
 import 'package:flutter_validation_input_real_time/src/widgets/wrap_text_field.dart';
+import 'package:rxdart/subjects.dart';
 
 class ValidationForm extends StatefulWidget {
   final Widget child;
@@ -29,7 +31,10 @@ class ValidationFormState extends State<ValidationForm> {
   void fieldIsChanged() => widget.onChanged.call(isPass);
 
   bool get isPass =>
-      _fields.every((input) => input.controller.inputStream.value.isPass);
+      _fields.every((input) => input.controller.inputStream.value.passes);
+
+  List<BehaviorSubject<Input>> get streamInputs =>
+      _fields.map((input) => input.controller.inputStream).toList();
 
   @override
   Widget build(BuildContext context) => widget.child;
