@@ -5,7 +5,7 @@ class IsFacebookUrl extends Rule {
   bool isValid(String value) => isFacebookUrlValid(value);
 
   @override
-  String toString() => 'not_valid_facebook_url';
+  String toString() => 'validation.not_valid_facebook_url';
 }
 
 bool isFacebookUrlValid(String url) {

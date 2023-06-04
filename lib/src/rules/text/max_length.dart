@@ -9,5 +9,5 @@ class MaxLength extends Rule {
   bool isValid(String value) => value.trim().length <= max;
 
   @override
-  String toString() => 'validation.max length is $max';
+  String toString() => 'validation.max';
 }

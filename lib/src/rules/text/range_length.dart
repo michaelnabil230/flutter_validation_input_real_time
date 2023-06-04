@@ -1,19 +1,18 @@
 import 'package:flutter_validation_input_real_time/src/rules/rule.dart';
-import 'package:flutter_validation_input_real_time/src/rules/numbers/min_value.dart';
 
-class RangeValue extends Rule {
+class RangeLength extends Rule {
   final int min;
 
   final int max;
 
-  RangeValue({
+  RangeLength({
     required this.min,
     required this.max,
   });
 
   @override
   bool isValid(String value) {
-    int length = getLength(value);
+    int length = value.trim().length;
 
     return length <= max && length >= min;
   }

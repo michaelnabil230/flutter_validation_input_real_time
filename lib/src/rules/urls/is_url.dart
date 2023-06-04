@@ -5,7 +5,7 @@ class IsUrl extends Rule {
   bool isValid(String value) => isUrlValid(value);
 
   @override
-  String toString() => 'not_valid_url';
+  String toString() => 'validation.not_valid_url';
 }
 
 bool isUrlValid(String url) {

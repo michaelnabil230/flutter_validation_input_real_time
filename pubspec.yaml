@@ -13,6 +13,7 @@ dependencies:
   
   rxdart: ^0.27.7
   email_validator: ^2.1.17
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:

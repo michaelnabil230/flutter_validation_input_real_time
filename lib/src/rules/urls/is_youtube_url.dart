@@ -5,7 +5,7 @@ class IsYoutubeUrl extends Rule {
   bool isValid(String value) => isYoutubeUrLValid(value);
 
   @override
-  String toString() => 'not_valid_youtube_url';
+  String toString() => 'validation.not_valid_youtube_url';
 }
 
 bool isYoutubeUrLValid(String url) => RegExp(

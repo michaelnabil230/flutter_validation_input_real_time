@@ -9,10 +9,5 @@ class MinLength extends Rule {
   bool isValid(String value) => value.trim().length >= min;
 
   @override
-  String toString() => 'validation.min length is $min';
-}
-
-bool minLength(String? input, int min) {
-  if (input == null) return false;
-  return input.trim().length >= min;
+  String toString() => 'validation.min';
 }

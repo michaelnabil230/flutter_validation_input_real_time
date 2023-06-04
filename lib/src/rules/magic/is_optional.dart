@@ -5,5 +5,5 @@ class IsOptional extends Rule {
   bool isValid(String value) => true;
 
   @override
-  String toString() => throw Exception('this rules can not show errors');
+  String toString() => throw Exception('This rules can not show errors');
 }

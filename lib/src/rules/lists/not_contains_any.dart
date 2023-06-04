@@ -10,7 +10,5 @@ class NotContainsAny extends Rule {
   String toString() => 'validation.must_not_contains_any';
 
   @override
-  bool isValid(String value) => notContainsAny(value, list);
+  bool isValid(String value) => !containsAny(value, list);
 }
-
-bool notContainsAny(String v, List<String> list) => !containsAny(v, list);

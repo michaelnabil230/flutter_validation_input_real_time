@@ -8,9 +8,6 @@ class IsHexColor extends Rule {
   String toString() => 'validation.must_be_hex_color';
 }
 
-/// can starts with or without`#`
-/// must contains
-bool isHexColor(String? input) =>
-    input != null &&
+bool isHexColor(String input) =>
     (RegExp(r'^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$').hasMatch(input) ||
         RegExp(r'^#?([A-Fa-f0-9]{8}|[A-Fa-f0-9]{3})$').hasMatch(input));

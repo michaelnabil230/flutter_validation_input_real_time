@@ -11,19 +11,16 @@ class Match extends Rule {
 
   @override
   bool isValid(String value) => caseSensitive
-      ? match(value, other)
-      : match(value.toLowerCase(), other.toLowerCase());
+      ? _match(value, other)
+      : _match(value.toLowerCase(), other.toLowerCase());
 
   @override
   String toString() => 'validation.should_match';
 }
 
-bool match(
-  Object? input,
-  Object? other,
+bool _match(
+  String input,
+  String other,
 ) =>
-    input != null &&
-        other != null &&
-        input.runtimeType == other.runtimeType &&
-        identical(input, other) ||
+    input.runtimeType == other.runtimeType && identical(input, other) ||
     input == other;

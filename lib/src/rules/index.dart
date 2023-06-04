@@ -3,8 +3,8 @@ export 'colors/is_hex_color.dart';
 
 /// * dates
 export 'dates/date_after.dart';
+export 'dates/date_before.dart';
 export 'dates/is_date.dart';
-export 'dates/is_date_mills.dart';
 
 /// * IT
 export 'it/is_boolean.dart';
@@ -13,8 +13,8 @@ export 'it/is_port.dart';
 export 'it/regx.dart';
 
 /// * languages
-export 'languages/is_ltr_language.dart';
-export 'languages/is_rtl_language.dart';
+export 'languages/is_ltr.dart';
+export 'languages/is_rtl.dart';
 
 /// * lists
 export 'lists/contains_any.dart';
@@ -25,10 +25,9 @@ export 'lists/not_repeat_value.dart';
 
 /// * magic
 export 'magic/is_optional.dart';
-export 'numbers/is_arabic_num.dart';
 
 /// * numbers
-export 'numbers/is_hindi_num.dart';
+export 'numbers/is_number_only.dart';
 export 'numbers/is_number.dart';
 export 'numbers/max_value.dart';
 export 'numbers/min_value.dart';
@@ -41,10 +40,11 @@ export 'phone/is_ksa_number.dart';
 export 'text/contains.dart';
 export 'text/ends_with.dart';
 export 'text/is_empty.dart';
-export 'text/is_not_empty.dart';
+export 'text/Is_required.dart';
 export 'text/match.dart';
 export 'text/max_length.dart';
 export 'text/min_length.dart';
+export 'text/range_length.dart';
 export 'text/not_contains.dart';
 export 'text/starts_with.dart';
 

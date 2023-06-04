@@ -8,8 +8,5 @@ class IsEgyptianPhone extends Rule {
   String toString() => 'validation.is_egyptian_num';
 }
 
-bool isEgyptianNumber(String str) {
-  final phoneRegX = RegExp('^01[0125][0-9]{8}\$');
-
-  return phoneRegX.hasMatch(str);
-}
+bool isEgyptianNumber(String str) =>
+    RegExp('^01[0125][0-9]{8}\$').hasMatch(str);

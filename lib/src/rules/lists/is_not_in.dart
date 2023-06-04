@@ -7,10 +7,8 @@ class IsNotIn extends Rule {
   IsNotIn(this.list);
 
   @override
-  bool isValid(String value) => isNotIn(value, list);
+  bool isValid(String value) => !isIn(value, list);
 
   @override
   String toString() => 'validation.must_not_be_in_list';
 }
-
-bool isNotIn(Object v, List<Object> list) => !isIn(v, list);

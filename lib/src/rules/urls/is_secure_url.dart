@@ -8,7 +8,6 @@ class IsSecureUrl extends Rule {
   String toString() => 'validation.is_not_secure_url';
 }
 
-// returns true if the input is valid port number
 bool isSecureUrl(Object? input) {
   String? url;
   if (input == null) {

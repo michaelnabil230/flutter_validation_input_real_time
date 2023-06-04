@@ -5,7 +5,7 @@ class IsInstagramUrl extends Rule {
   bool isValid(String value) => isInstagramUrlValid(value);
 
   @override
-  String toString() => 'not_valid_instagram_url';
+  String toString() => 'validation.not_valid_instagram_url';
 }
 
 bool isInstagramUrlValid(String url) => RegExp(
