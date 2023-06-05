@@ -9,11 +9,11 @@ void main() {
       final rule = ConfirmedPassword('password');
 
       final inputs = [
-        const Input(name: 'password', value: 'Password123', rules: []),
-        const Input(name: 'confirmPassword', value: 'Password123', rules: []),
+        const Input(attribute: 'password', value: 'Password123', rules: []),
+        const Input(attribute: 'confirmPassword', value: 'Password123', rules: []),
       ];
 
-      rule.setInputs(inputs);
+      rule.initialization(inputs, 'password');
 
       expect(rule.isValid('Password123'), isTrue);
     });
@@ -24,11 +24,11 @@ void main() {
       final rule = ConfirmedPassword('password');
 
       final inputs = [
-        const Input(name: 'password', value: 'Password123', rules: []),
-        const Input(name: 'confirmPassword', value: 'Password456', rules: []),
+        const Input(attribute: 'password', value: 'Password123', rules: []),
+        const Input(attribute: 'confirmPassword', value: 'Password456', rules: []),
       ];
 
-      rule.setInputs(inputs);
+      rule.initialization(inputs, 'password');
 
       expect(rule.isValid('Password456'), isFalse);
     });
@@ -39,11 +39,11 @@ void main() {
       final rule = ConfirmedPassword('password');
 
       final inputs = [
-        const Input(name: 'username', value: 'john_doe', rules: []),
-        const Input(name: 'email', value: 'john@example.com', rules: []),
+        const Input(attribute: 'username', value: 'john_doe', rules: []),
+        const Input(attribute: 'email', value: 'john@example.com', rules: []),
       ];
 
-      rule.setInputs(inputs);
+      rule.initialization(inputs, 'password');
 
       expect(rule.isValid('Password123'), isFalse);
     });

@@ -1,6 +1,10 @@
 import 'package:flutter_validation_input_real_time/src/rules/rule.dart';
 
 class IsBool extends Rule {
+  IsBool({
+    super.customError,
+  });
+
   @override
   bool isValid(String value) {
     return ['true', 'false', '0', '1']
@@ -8,5 +12,5 @@ class IsBool extends Rule {
   }
 
   @override
-  String toString() => 'validation.is_not_bool';
+  String error() => 'validation.is_not_bool';
 }

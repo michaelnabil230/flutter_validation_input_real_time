@@ -1,6 +1,10 @@
 import 'package:flutter_validation_input_real_time/src/rules/rule.dart';
 
 class IsIpAddress extends Rule {
+  IsIpAddress({
+    super.customError,
+  });
+
   @override
   bool isValid(String value) {
     final ipParts = value.split('.');
@@ -24,5 +28,5 @@ class IsIpAddress extends Rule {
   }
 
   @override
-  String toString() => 'validation.is_ip_address';
+  String error() => 'validation.is_ip_address';
 }

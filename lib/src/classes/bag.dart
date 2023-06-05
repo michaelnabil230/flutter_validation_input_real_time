@@ -1,24 +1,23 @@
-import 'package:equatable/equatable.dart';
+// Map<String, Map<String, String>> bag = {
+//   'name': {
+//     'required': 'massage',
+//   }
+// };
 
-class Bag extends Equatable {
-  final String? error;
-
-  final bool passes;
+class Bag {
+  final List<String> errors;
 
   const Bag({
-    this.error,
-    this.passes = false,
+    this.errors = const [],
   });
 
   factory Bag.empty() => const Bag();
 
-  factory Bag.error(String error) => Bag(error: error);
+  bool get isValid => errors.isEmpty;
 
-  factory Bag.passes() => const Bag(passes: true);
-
-  @override
-  String toString() => 'Bug(error: $error, passes: $passes)';
+  bool get isInvalid => !isValid;
 
   @override
-  List<Object?> get props => [error, passes];
+  String toString() =>
+      'Bug(errors: $errors, isValid: $isValid, isInvalid: $isInvalid)';
 }

@@ -7,6 +7,7 @@ class Match extends Rule {
   Match(
     this.other, {
     this.caseSensitive = true,
+    super.customError,
   });
 
   @override
@@ -15,7 +16,7 @@ class Match extends Rule {
       : _match(value.toLowerCase(), other.toLowerCase());
 
   @override
-  String toString() => 'validation.should_match';
+  String error() => 'validation.should_match';
 }
 
 bool _match(

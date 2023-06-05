@@ -54,6 +54,8 @@ export 'text/starts_with.dart';
 export 'text/uppercase.dart';
 export 'text/lowercase.dart';
 export 'text/same.dart';
+export 'text/is_username.dart';
+export 'text/alpha_numeric.dart';
 
 /// * Url
 export 'urls/is_facebook_url.dart';

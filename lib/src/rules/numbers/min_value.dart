@@ -3,7 +3,10 @@ import 'package:flutter_validation_input_real_time/src/rules/rule.dart';
 class MinValue extends Rule {
   final int min;
 
-  MinValue(this.min);
+  MinValue(
+    this.min, {
+    super.customError,
+  });
 
   @override
   bool isValid(String value) {
@@ -13,5 +16,5 @@ class MinValue extends Rule {
   }
 
   @override
-  String toString() => 'validation.must_be_min';
+  String error() => 'validation.must_be_min';
 }

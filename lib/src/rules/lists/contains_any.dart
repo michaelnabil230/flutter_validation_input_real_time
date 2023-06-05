@@ -8,6 +8,7 @@ class ContainsAny extends Rule {
   ContainsAny(
     this.list, {
     this.caseSensitive = false,
+    super.customError,
   });
 
   @override
@@ -15,7 +16,7 @@ class ContainsAny extends Rule {
       containsAny(value, list, caseSensitive: caseSensitive);
 
   @override
-  String toString() => 'validation.must_contains_any';
+  String error() => 'validation.must_contains_any';
 }
 
 bool containsAny(

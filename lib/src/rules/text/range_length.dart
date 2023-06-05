@@ -8,6 +8,7 @@ class RangeLength extends Rule {
   RangeLength({
     required this.min,
     required this.max,
+    super.customError,
   });
 
   @override
@@ -18,5 +19,5 @@ class RangeLength extends Rule {
   }
 
   @override
-  String toString() => 'validation.must_be_range';
+  String error() => 'validation.must_be_range';
 }

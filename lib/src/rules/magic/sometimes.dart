@@ -5,5 +5,5 @@ class Sometimes extends Rule {
   bool isValid(String value) => true;
 
   @override
-  String toString() => throw Exception('This rules can not show errors');
+  String error() => throw Exception('This rules can not show errors');
 }

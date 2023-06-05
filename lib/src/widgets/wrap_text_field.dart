@@ -6,7 +6,7 @@ import 'package:flutter_validation_input_real_time/src/widgets/validation_form.d
 import 'package:rxdart/subjects.dart';
 
 class WrapTextField extends StatefulWidget {
-  final String name;
+  final String attribute;
 
   final List<Rule> rules;
 
@@ -16,7 +16,7 @@ class WrapTextField extends StatefulWidget {
 
   const WrapTextField({
     super.key,
-    required this.name,
+    required this.attribute,
     required this.rules,
     required this.child,
     required this.controller,
@@ -36,7 +36,7 @@ class WrapTextFieldState extends State<WrapTextField> {
   @override
   void initState() {
     _initialData = Input(
-      name: widget.name,
+      attribute: widget.attribute,
       value: controller.text,
       rules: widget.rules,
     );

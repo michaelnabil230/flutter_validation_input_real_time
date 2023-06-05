@@ -8,6 +8,7 @@ class NotRepeat extends Rule {
 
   NotRepeat({
     this.caseSensitive = false,
+    super.customError,
   });
 
   void setList(List<String> list) => this.list = list;
@@ -17,5 +18,5 @@ class NotRepeat extends Rule {
       containsAny(value, list, caseSensitive: caseSensitive);
 
   @override
-  String toString() => 'validation.must_contains_any';
+  String error() => 'validation.not_repeat';
 }

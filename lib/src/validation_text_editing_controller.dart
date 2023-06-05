@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_validation_input_real_time/src/classes/bag.dart';
 import 'package:flutter_validation_input_real_time/src/classes/input.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -15,7 +14,7 @@ class ValidationTextEditingController extends TextEditingController {
   }
 
   void clearError() {
-    inputStream.add(inputStream.value.copyWith(value: '', bag: Bag.empty()));
+    inputStream.add(inputStream.value.copyWith(value: '', errors: []));
   }
 
   @override

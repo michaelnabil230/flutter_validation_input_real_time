@@ -52,10 +52,10 @@ class _MyAppState extends State<MyApp> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 WrapTextField(
-                  name: 'email',
+                  attribute: 'email',
                   controller: _emailController,
                   rules: [
-                    IsRequired(),
+                    IsRequired(customError: 'The email is required'),
                     IsEmail(),
                   ],
                   child: (input) {
@@ -68,7 +68,7 @@ class _MyAppState extends State<MyApp> {
                   },
                 ),
                 WrapTextField(
-                  name: 'password',
+                  attribute: 'password',
                   controller: _passwordController,
                   rules: [
                     IsRequired(),
@@ -84,7 +84,7 @@ class _MyAppState extends State<MyApp> {
                   },
                 ),
                 WrapTextField(
-                  name: 'password_confirmation',
+                  attribute: 'password_confirmation',
                   controller: _passwordConfirmationController,
                   rules: [
                     IsRequired(),
@@ -204,11 +204,11 @@ class CustomTextField extends StatelessWidget {
   }
 
   Color get color {
-    if (input.hasError) {
+    if (input.isInvalid) {
       return Colors.red;
     }
 
-    if (input.passes) {
+    if (input.isValid) {
       return Colors.green;
     }
 

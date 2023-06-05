@@ -1,6 +1,10 @@
 import 'package:flutter_validation_input_real_time/src/rules/rule.dart';
 
 class IsSecureUrl extends Rule {
+  IsSecureUrl({
+    super.customError,
+  });
+
   @override
   bool isValid(String value) {
     String url = value.toLowerCase();
@@ -9,5 +13,5 @@ class IsSecureUrl extends Rule {
   }
 
   @override
-  String toString() => 'validation.is_not_secure_url';
+  String error() => 'validation.is_not_secure_url';
 }

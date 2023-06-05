@@ -1,12 +1,12 @@
 import 'package:equatable/equatable.dart';
 
 import 'package:flutter_validation_input_real_time/flutter_validation_input_real_time.dart';
-import 'package:flutter_validation_input_real_time/src/classes/bag.dart';
+import 'package:flutter_validation_input_real_time/src/classes/validation_state.dart';
 import 'package:flutter_validation_input_real_time/src/rules/lists/not_repeat_value.dart';
 import 'package:flutter_validation_input_real_time/src/rules/rule.dart';
 
 class Input extends Equatable {
-  final String name;
+  final String attribute;
 
   final String value;
 
@@ -14,66 +14,75 @@ class Input extends Equatable {
 
   final List<String> oldValues;
 
-  final Bag bag;
+  final List<String> errors;
+
+  final ValidationState state;
 
   const Input({
-    required this.name,
+    required this.attribute,
     required this.value,
     required this.rules,
     this.oldValues = const [],
-    this.bag = const Bag(),
+    this.errors = const [],
+    this.state = ValidationState.initial,
   });
 
   Input runValidation(List<Input> inputs, String value) {
-    Bag bag = Bag.passes();
+    ValidationState? state;
+    List<String> errors = [];
 
     for (final rule in rules) {
-      rule.setInputs(inputs);
+      rule.initialization(inputs, attribute);
 
       if (rule is NotRepeat) {
         rule.setList(oldValues);
       }
 
       if (!rule.isValid(value)) {
-        bag = Bag.error(rule.toString());
-        break;
+        errors = List.of(this.errors)..add(rule.toString());
+        state = ValidationState.invalid;
       }
     }
 
-    return copyWith(value: value, bag: bag);
+    return copyWith(
+      value: value,
+      errors: errors,
+      state: state ?? ValidationState.valid,
+    );
   }
 
-  String? get error => bag.error;
+  String? get error => errors.isEmpty ? null : errors.first;
 
-  bool get passes => bag.passes;
+  bool get isValid => state.isValid;
 
-  bool get hasError => error != null;
+  bool get isInvalid => state.isInvalid;
 
   @override
-  String toString() => 'Input(name: $name, value: $value, bag: $bag)';
+  String toString() =>
+      'Input(attribute: $attribute, value: $value, errors: $errors)';
 
   Input addError(String error) {
-    Bag bag = Bag.error(error);
-
-    return copyWith(bag: bag);
+    return copyWith(errors: List.of(errors)..add(error));
   }
 
   Input copyWith({
-    String? name,
+    String? attribute,
     String? value,
     List<Rule>? rules,
     List<String>? oldValues,
-    Bag? bag,
+    List<String>? errors,
+    ValidationState? state,
   }) {
     return Input(
-      name: name ?? this.name,
+      attribute: attribute ?? this.attribute,
       value: value ?? this.value,
       rules: rules ?? this.rules,
       oldValues: oldValues ?? this.oldValues,
-      bag: bag ?? this.bag,
+      errors: errors ?? this.errors,
+      state: state ?? this.state,
     );
   }
 
   @override
-  List<Object?> get props => [name, value, rules, oldValues, bag];
+  List<Object> get props => [attribute, value, rules, oldValues, errors];
 }

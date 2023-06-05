@@ -18,6 +18,7 @@ class Password extends Rule {
     this.uppercase = false,
     this.numbers = false,
     this.specialCharacters = false,
+    super.customError,
   });
 
   late String _message;
@@ -54,5 +55,5 @@ class Password extends Rule {
   }
 
   @override
-  String toString() => 'validation.password.$_message';
+  String error() => 'validation.password.$_message';
 }

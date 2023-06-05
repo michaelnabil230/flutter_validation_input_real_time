@@ -1,6 +1,10 @@
 import 'package:flutter_validation_input_real_time/src/rules/rule.dart';
 
 class IsInstagramUrl extends Rule {
+  IsInstagramUrl({
+    super.customError,
+  });
+
   @override
   bool isValid(String value) {
     return RegExp(
@@ -9,5 +13,5 @@ class IsInstagramUrl extends Rule {
   }
 
   @override
-  String toString() => 'validation.not_valid_instagram_url';
+  String error() => 'validation.not_valid_instagram_url';
 }

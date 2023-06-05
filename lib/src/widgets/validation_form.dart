@@ -42,7 +42,7 @@ class ValidationFormState extends State<ValidationForm> {
   }
 
   bool _inputPasses(WrapTextFieldState state) =>
-      state.controller.inputStream.value.passes;
+      state.controller.inputStream.value.isValid;
 
   bool get fails => !passes;
 

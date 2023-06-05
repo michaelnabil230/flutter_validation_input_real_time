@@ -3,7 +3,10 @@ import 'package:flutter_validation_input_real_time/src/rules/rule.dart';
 class IsDateAfter extends Rule {
   final DateTime date;
 
-  IsDateAfter(this.date);
+  IsDateAfter(
+    this.date, {
+    super.customError,
+  });
 
   @override
   bool isValid(String value) {
@@ -13,5 +16,5 @@ class IsDateAfter extends Rule {
   }
 
   @override
-  String toString() => 'validation.must_be_after_date';
+  String error() => 'validation.must_be_after_date';
 }
