@@ -10,9 +10,7 @@ class NotRepeat extends Rule {
     this.caseSensitive = false,
   });
 
-  void setList(List<String> list) {
-    this.list = list;
-  }
+  void setList(List<String> list) => this.list = list;
 
   @override
   bool isValid(String value) =>

@@ -37,8 +37,8 @@ export 'numbers/max_value.dart';
 export 'numbers/min_value.dart';
 
 /// * Phone
-export 'phone/is_egy_number.dart';
-export 'phone/is_ksa_number.dart';
+export 'phone/is_egy_phone.dart';
+export 'phone/is_ksa_phone.dart';
 
 /// * Text
 export 'text/contains.dart';
@@ -57,6 +57,6 @@ export 'text/same.dart';
 
 /// * Url
 export 'urls/is_facebook_url.dart';
-export 'urls/is_instgram_url.dart';
+export 'urls/is_instagram_url.dart';
 export 'urls/is_url.dart';
 export 'urls/is_youtube_url.dart';

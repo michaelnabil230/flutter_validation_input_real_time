@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 
 class IsLtr extends Rule {
   @override
-  bool isValid(String value) => !Bidi.isRtlLanguage(value);
+  bool isValid(String value) => !Bidi.detectRtlDirectionality(value);
 
   @override
   String toString() => 'validation.must_be_english';

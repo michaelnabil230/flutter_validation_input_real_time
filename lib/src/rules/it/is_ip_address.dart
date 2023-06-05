@@ -2,17 +2,8 @@ import 'package:flutter_validation_input_real_time/src/rules/rule.dart';
 
 class IsIpAddress extends Rule {
   @override
-  bool isValid(String value) => isIpAddress(value);
-
-  @override
-  String toString() => 'validation.is_ip_address';
-}
-
-bool isIpAddress(Object? input) {
-  if (input == null || input is! String) {
-    return false;
-  } else {
-    final ipParts = input.split('.');
+  bool isValid(String value) {
+    final ipParts = value.split('.');
     if (ipParts.length != 4) {
       return false;
     }
@@ -31,4 +22,7 @@ bool isIpAddress(Object? input) {
     }
     return isValid;
   }
+
+  @override
+  String toString() => 'validation.is_ip_address';
 }
