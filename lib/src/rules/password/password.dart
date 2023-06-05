@@ -46,7 +46,7 @@ class Password extends Rule {
       return false;
     }
 
-    if (numbers && !IsNumbersOnly().isValid(value)) {
+    if (numbers && !RegExp('[0-9]').hasMatch(value)) {
       _message = 'numbers';
       return false;
     }
