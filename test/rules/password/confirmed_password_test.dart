@@ -10,7 +10,8 @@ void main() {
 
       final inputs = [
         const Input(attribute: 'password', value: 'Password123', rules: []),
-        const Input(attribute: 'confirmPassword', value: 'Password123', rules: []),
+        const Input(
+            attribute: 'confirmPassword', value: 'Password123', rules: []),
       ];
 
       rule.initialization(inputs, 'password');
@@ -25,7 +26,8 @@ void main() {
 
       final inputs = [
         const Input(attribute: 'password', value: 'Password123', rules: []),
-        const Input(attribute: 'confirmPassword', value: 'Password456', rules: []),
+        const Input(
+            attribute: 'confirmPassword', value: 'Password456', rules: []),
       ];
 
       rule.initialization(inputs, 'password');

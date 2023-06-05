@@ -44,7 +44,7 @@ export 'phone/is_ksa_phone.dart';
 export 'text/contains.dart';
 export 'text/ends_with.dart';
 export 'text/is_empty.dart';
-export 'text/Is_required.dart';
+export 'text/is_required.dart';
 export 'text/match.dart';
 export 'text/max_length.dart';
 export 'text/min_length.dart';

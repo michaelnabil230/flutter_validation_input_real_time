@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_validation_input_real_time/flutter_validation_input_real_time.dart';
 
@@ -41,10 +43,10 @@ class _MyAppState extends State<MyApp> {
         body: ValidationForm(
           onChanged: (bool passes) {
             if (passes) {
-              print('The from can passes');
+              log('The from can passes');
               return;
             }
-            print('The from can\'t passes');
+            log('The from can\'t passes');
           },
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -112,11 +114,11 @@ class _MyAppState extends State<MyApp> {
                       return InkWell(
                         onTap: () {
                           if (!buttonFromData.isDisable) {
-                            print('Login');
+                            log('Login');
                             return;
                           }
 
-                          print('Please fill the inputs first');
+                          log('Please fill the inputs first');
                         },
                         child: Container(
                           height: 58,
