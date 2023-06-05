@@ -7,7 +7,7 @@ void main() {
       final rule = IsRtl();
 
       expect(rule.isValid('عربي'), isTrue);
-      expect(rule.isValid('مرحبا'), isTrue);
+      expect(rule.isValid('١٢٣'), isTrue);
     });
 
     test('should return false if value is not in a RTL language', () {

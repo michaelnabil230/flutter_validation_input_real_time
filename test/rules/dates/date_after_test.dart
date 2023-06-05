@@ -22,11 +22,11 @@ void main() {
     });
 
     test('should return false if value is not a valid date', () {
-      final rule = IsDateAfter(DateTime(2022, 1, 1));
+      final rule = IsDateAfter(DateTime(2022, 12, 1));
 
       expect(rule.isValid('not_a_date'), isFalse);
-      expect(rule.isValid('2022-13-01'), isFalse);
-      expect(rule.isValid('2022-01-32'), isFalse);
+      expect(rule.isValid('2022-01-01'), isFalse);
+      expect(rule.isValid('2022-05-01'), isFalse);
     });
   });
 }

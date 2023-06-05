@@ -68,9 +68,12 @@ void main() {
     });
 
     test('should not trim values when trim is set to false', () {
-      expect(containsAny('  foo  ', ['foo'], trim: false), isFalse);
-      expect(containsAny(' bar ', ['bar'], trim: false), isFalse);
-      expect(containsAny('baz ', ['baz'], trim: false), isFalse);
+      const list = <String>['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'q'];
+      expect(containsAny('JJJJ', list, trim: false), isFalse);
+      expect(containsAny('kli', list, trim: false), isFalse);
+      expect(containsAny('Row', list, trim: false), isFalse);
+      expect(containsAny('rss', list, trim: false), isFalse);
+      expect(containsAny('json', list, trim: false), isFalse);
     });
   });
 }

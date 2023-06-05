@@ -6,7 +6,7 @@ class IsNumbersOnly extends Rule {
   });
 
   @override
-  bool isValid(String value) => RegExp('[0-9]').hasMatch(value);
+  bool isValid(String value) => int.tryParse(value) != null;
 
   @override
   String error() => 'validation.is_numbers_only';
