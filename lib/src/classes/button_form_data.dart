@@ -2,21 +2,29 @@ import 'package:equatable/equatable.dart';
 
 class ButtonFromData extends Equatable {
   final bool isLoading;
-  final bool isDisable;
+
+  final bool passes;
+
+  final bool isEditForm;
 
   const ButtonFromData({
     this.isLoading = false,
-    this.isDisable = false,
+    this.passes = false,
+    this.isEditForm = false,
   });
 
-  factory ButtonFromData.empty() => const ButtonFromData();
-
-  factory ButtonFromData.enable() => const ButtonFromData(isDisable: false);
-
-  factory ButtonFromData.disable() => const ButtonFromData(isDisable: true);
-
-  factory ButtonFromData.loading() => const ButtonFromData(isLoading: true);
+  ButtonFromData copyWith({
+    bool? isLoading,
+    bool? passes,
+    bool? isEditForm,
+  }) {
+    return ButtonFromData(
+      isLoading: isLoading ?? this.isLoading,
+      passes: passes ?? this.passes,
+      isEditForm: isEditForm ?? this.isEditForm,
+    );
+  }
 
   @override
-  List<Object> get props => [isLoading, isDisable];
+  List<Object> get props => [isLoading, passes, isEditForm];
 }

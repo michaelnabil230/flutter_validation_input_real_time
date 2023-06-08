@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_validation_input_real_time/flutter_validation_input_real_time.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(const MaterialApp(home: ValidationInput(child: MyApp())));
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -16,13 +16,72 @@ class _MyAppState extends State<MyApp> {
   late ValidationTextEditingController _emailController;
   late ValidationTextEditingController _passwordController;
   late ValidationTextEditingController _passwordConfirmationController;
+  late ButtonController _buttonController;
 
   @override
   void initState() {
-    _emailController = ValidationTextEditingController();
-    _passwordController = ValidationTextEditingController();
-    _passwordConfirmationController = ValidationTextEditingController();
+    _initTextController();
+
+    _buttonController = ButtonController(context: context);
+
     super.initState();
+  }
+
+  void _initTextController() {
+    _emailController = ValidationTextEditingController(
+      context: context,
+      attribute: 'email',
+      rules: () {
+        return [
+          IsRequired(),
+          NotRepeat(),
+          IsEmail(),
+        ];
+      },
+    );
+
+    _passwordController = ValidationTextEditingController(
+      context: context,
+      attribute: 'password',
+      rules: () {
+        return [
+          IsRequired(),
+          Password(min: 3),
+          Same(_passwordConfirmationController.text),
+        ];
+      },
+    );
+
+    _passwordConfirmationController = ValidationTextEditingController(
+      context: context,
+      attribute: 'password_confirmation',
+      rules: () {
+        return [
+          IsRequired(),
+          Password(min: 3),
+          Same(_passwordController.text),
+        ];
+      },
+    );
+  }
+
+  void _login() {
+    if (!_buttonController.get().passes) {
+      log('Please fill the inputs first');
+      return;
+    }
+
+    log('The request has ben sended in back-end');
+    _buttonController.isLoading(true);
+
+    Future.delayed(const Duration(seconds: 5), () {
+      _emailController.addError(
+        'The email is exits in database',
+        withIgnoreValue: true,
+      );
+
+      _buttonController.isLoading(false);
+    });
   }
 
   @override
@@ -35,108 +94,54 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Welcome to the real-time validator'),
-        ),
-        body: ValidationForm(
-          onChanged: (bool passes) {
-            if (passes) {
-              log('The from can passes');
-              return;
-            }
-            log('The from can\'t passes');
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                WrapTextField(
-                  attribute: 'email',
-                  controller: _emailController,
-                  rules: [
-                    IsRequired(customError: 'The email is required'),
-                    IsEmail(),
-                  ],
-                  child: (input) {
-                    return CustomTextField(
-                      controller: _emailController,
-                      hintText: 'Email',
-                      input: input,
-                      keyboardType: TextInputType.emailAddress,
-                    );
-                  },
-                ),
-                WrapTextField(
-                  attribute: 'password',
-                  controller: _passwordController,
-                  rules: [
-                    IsRequired(),
-                    Password(min: 3),
-                  ],
-                  child: (input) {
-                    return CustomTextField(
-                      controller: _passwordController,
-                      hintText: 'Password',
-                      input: input,
-                      keyboardType: TextInputType.visiblePassword,
-                    );
-                  },
-                ),
-                WrapTextField(
-                  attribute: 'password_confirmation',
-                  controller: _passwordConfirmationController,
-                  rules: [
-                    IsRequired(),
-                    Password(min: 3),
-                    ConfirmedPassword('password'),
-                  ],
-                  child: (input) {
-                    return CustomTextField(
-                      controller: _passwordConfirmationController,
-                      hintText: 'Password confirmation',
-                      input: input,
-                      keyboardType: TextInputType.visiblePassword,
-                    );
-                  },
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: WrapButtonSubmit(
-                    inputs: [
-                      _emailController,
-                      _passwordController,
-                      _passwordConfirmationController,
-                    ],
-                    child: (ButtonFromData buttonFromData) {
-                      return InkWell(
-                        onTap: () {
-                          if (!buttonFromData.isDisable) {
-                            log('Login');
-                            return;
-                          }
-
-                          log('Please fill the inputs first');
-                        },
-                        child: Container(
-                          height: 58,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: Colors.amber,
-                          ),
-                          alignment: Alignment.center,
-                          child: const Text('Login'),
-                        ),
-                      );
-                    },
-                  ),
-                )
-              ],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Welcome to the real-time validator'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            CustomTextField(
+              controller: _emailController,
+              hintText: 'Email',
+              input: _emailController.get(),
+              keyboardType: TextInputType.emailAddress,
             ),
-          ),
+            CustomTextField(
+              controller: _passwordController,
+              hintText: 'Password',
+              input: _passwordController.get(),
+              keyboardType: TextInputType.visiblePassword,
+            ),
+            CustomTextField(
+              controller: _passwordConfirmationController,
+              hintText: 'Password confirmation',
+              input: _passwordConfirmationController.get(),
+              keyboardType: TextInputType.visiblePassword,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: InkWell(
+                onTap: _login,
+                child: Container(
+                  height: 58,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: _buttonController.get().passes
+                        ? Colors.blue
+                        : Colors.red,
+                  ),
+                  alignment: Alignment.center,
+                  child: _buttonController.get().isLoading
+                      ? const Text('Login is loading')
+                      : const Text('Login'),
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );
@@ -170,6 +175,7 @@ class CustomTextField extends StatelessWidget {
           controller: controller,
           keyboardType: keyboardType,
           style: TextStyle(color: color),
+          enabled: input.enabled,
           decoration: InputDecoration(
             hintText: hintText,
             hintStyle: TextStyle(color: color),
@@ -206,14 +212,14 @@ class CustomTextField extends StatelessWidget {
   }
 
   Color get color {
-    if (input.isInvalid) {
-      return Colors.red;
+    if (input.isInitial) {
+      return Colors.black;
     }
 
     if (input.isValid) {
       return Colors.green;
     }
 
-    return Colors.black;
+    return Colors.red;
   }
 }

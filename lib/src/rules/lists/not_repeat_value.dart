@@ -1,21 +1,16 @@
-import 'package:flutter_validation_input_real_time/src/rules/rule.dart';
-import 'package:flutter_validation_input_real_time/src/rules/lists/contains_any.dart';
+import 'package:flutter_validation_input_real_time/flutter_validation_input_real_time.dart';
 
 class NotRepeat extends Rule {
   late List<String> list;
 
-  final bool caseSensitive;
-
   NotRepeat({
-    this.caseSensitive = false,
     super.customError,
   });
 
   void setList(List<String> list) => this.list = list;
 
   @override
-  bool isValid(String value) =>
-      containsAny(value, list, caseSensitive: caseSensitive);
+  bool isValid(String value) => IsNotIn(list).isValid(value);
 
   @override
   String error() => 'validation.not_repeat';
