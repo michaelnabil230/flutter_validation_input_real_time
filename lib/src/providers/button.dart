@@ -3,21 +3,30 @@ import 'package:flutter_validation_input_real_time/flutter_validation_input_real
 import 'package:flutter_validation_input_real_time/src/classes/button_form_data.dart';
 
 class ButtonProvider extends ChangeNotifier {
-  late ButtonFromData buttonFromData = const ButtonFromData();
+  late ButtonFormData buttonFormData = const ButtonFormData();
 
   void check(List<Input> inputs) {
-    bool passes = buttonFromData.isEditForm
+    bool passes = buttonFormData.isEditForm
         ? inputs.any((e) => e.isValid)
         : inputs.every((e) => e.isValid);
 
-    buttonFromData = buttonFromData.copyWith(passes: passes);
+    Map<String, List<String>> errors = {};
+
+    for (final input in inputs) {
+      errors.addAll({input.attribute: input.errors});
+    }
+
+    buttonFormData = buttonFormData.copyWith(
+      passes: passes,
+      errors: errors,
+    );
   }
 
-  void setButtonData(ButtonFromData buttonFromData) =>
-      this.buttonFromData = buttonFromData;
+  void setButtonData(ButtonFormData buttonFormData) =>
+      this.buttonFormData = buttonFormData;
 
   void isLoading(bool isLoading) {
-    buttonFromData = buttonFromData.copyWith(isLoading: isLoading);
+    buttonFormData = buttonFormData.copyWith(isLoading: isLoading);
 
     notifyListeners();
   }
