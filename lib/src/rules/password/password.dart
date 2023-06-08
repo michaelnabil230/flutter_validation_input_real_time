@@ -1,5 +1,4 @@
 import 'package:flutter_validation_input_real_time/flutter_validation_input_real_time.dart';
-import 'package:flutter_validation_input_real_time/src/rules/rule.dart';
 
 class Password extends Rule {
   final int min;
