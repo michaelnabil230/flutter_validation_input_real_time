@@ -135,8 +135,8 @@ class _MyAppState extends State<MyApp> {
                         : Colors.red,
                   ),
                   alignment: Alignment.center,
-                  child: _buttonController.get().isLoading
-                      ? const Text('Login is loading')
+                  child: _buttonController.get(listen: true).isLoading
+                      ? const Text('Login is loading....')
                       : const Text('Login'),
                 ),
               ),

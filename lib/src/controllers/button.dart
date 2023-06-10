@@ -11,18 +11,17 @@ class ButtonController {
     bool passes = false,
     bool isLoading = false,
   }) {
-    _setButtonData(ButtonFormData(passes: passes, isLoading: isLoading));
+    provider()
+        .setButtonData(ButtonFormData(passes: passes, isLoading: isLoading));
+  }
+
+  ButtonProvider provider({bool listen = false}) {
+    return Provider.of<ButtonProvider>(context, listen: listen);
   }
 
   ButtonFormData get({bool listen = false}) {
-    return Provider.of<ButtonProvider>(context, listen: listen).buttonFormData;
+    return provider(listen: listen).buttonFormData;
   }
 
-  void isLoading(bool isLoading) {
-    context.read<ButtonProvider>().isLoading(isLoading);
-  }
-
-  void _setButtonData(ButtonFormData buttonFormData) {
-    context.read<ButtonProvider>().setButtonData(buttonFormData);
-  }
+  void isLoading(bool isLoading) => provider().isLoading(isLoading);
 }
