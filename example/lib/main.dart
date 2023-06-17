@@ -22,7 +22,14 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     _initTextController();
 
-    _buttonController = ButtonController(context: context);
+    _buttonController = ButtonController(
+      context: context,
+      inputs: [
+        _emailController,
+        _passwordController,
+        _passwordConfirmationController,
+      ],
+    );
 
     super.initState();
   }

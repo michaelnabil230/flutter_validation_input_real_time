@@ -1,22 +1,24 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_validation_input_real_time/flutter_validation_input_real_time.dart';
 import 'package:flutter_validation_input_real_time/src/classes/button_form_data.dart';
-import 'package:flutter_validation_input_real_time/src/providers/button.dart';
 import 'package:provider/provider.dart';
 
 class ButtonController {
-  final BuildContext context;
+  final BuildContext _context;
 
   ButtonController({
-    required this.context,
+    required BuildContext context,
+    required List<ValidationTextEditingController> inputs,
     bool passes = false,
     bool isLoading = false,
-  }) {
+  }) : _context = context {
     provider()
-        .setButtonData(ButtonFormData(passes: passes, isLoading: isLoading));
+      ..setInputs(inputs)
+      ..setButtonData(ButtonFormData(passes: passes, isLoading: isLoading));
   }
 
   ButtonProvider provider({bool listen = false}) {
-    return Provider.of<ButtonProvider>(context, listen: listen);
+    return Provider.of<ButtonProvider>(_context, listen: listen);
   }
 
   ButtonFormData get({bool listen = false}) {

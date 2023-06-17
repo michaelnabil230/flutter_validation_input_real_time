@@ -3,35 +3,43 @@ import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 
 class ValidationTextEditingController extends TextEditingController {
-  final BuildContext context;
+  final BuildContext _context;
 
   late Input input;
 
-  late InputProvider inputProvider;
+  late InputProvider _inputProvider;
 
-  late ButtonProvider buttonProvider;
+  late ButtonProvider _buttonProvider;
 
   ValidationTextEditingController({
-    required this.context,
+    required BuildContext context,
     required String attribute,
     required List<Rule> Function() rules,
     bool enabled = true,
     super.text,
-  }) {
-    input =
-        Input(attribute: attribute, text: text, rules: rules, enabled: enabled);
+  }) : _context = context {
+    input = Input(
+      key: UniqueKey(),
+      attribute: attribute,
+      text: text,
+      rules: rules,
+      enabled: enabled,
+    );
 
-    inputProvider = context.read<InputProvider>()..register(input);
-    buttonProvider = context.read<ButtonProvider>();
-
-    addListener(() {
-      inputProvider.runValidation(attribute, text);
-
-      buttonProvider.check(inputProvider.inputs);
-    });
+    _inputProvider = _context.read<InputProvider>();
+    _buttonProvider = _context.read<ButtonProvider>();
   }
 
-  Input get() => context.watch<InputProvider>().getInput(input.attribute);
+  Input get() => _context.watch<InputProvider>().getInput(input);
+
+  @override
+  set value(TextEditingValue newValue) {
+    input = _inputProvider.runValidation(input, text);
+
+    _buttonProvider.check();
+
+    super.value = newValue;
+  }
 
   void addError(
     String error, {
@@ -42,25 +50,30 @@ class ValidationTextEditingController extends TextEditingController {
       ignore = List.of(ignore)..add(text);
     }
 
-    inputProvider.addError(
-      input.attribute,
-      error,
-      ignore: ignore,
-    );
-    buttonProvider.check(inputProvider.inputs);
+    notifyListeners();
+
+    input = input.addError(error).addIgnoreValues(ignore);
+    _buttonProvider.check();
   }
 
-  void clearError() => inputProvider.clearError(input.attribute);
+  void clearError() {
+    notifyListeners();
+    input = input.clearError();
+  }
+
+  void enable() {
+    notifyListeners();
+    input = input.copyWith(enabled: true);
+  }
+
+  void disable() {
+    notifyListeners();
+    input = input.copyWith(enabled: false);
+  }
 
   @override
   void clear() {
     super.clear();
     clearError();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    inputProvider.unregister(input.attribute);
   }
 }

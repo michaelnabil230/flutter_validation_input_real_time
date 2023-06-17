@@ -1,9 +1,12 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:flutter_validation_input_real_time/flutter_validation_input_real_time.dart';
 import 'package:flutter_validation_input_real_time/src/classes/validation_state.dart';
 
 class Input extends Equatable {
+  final UniqueKey key;
+
   final String attribute;
 
   final String text;
@@ -19,6 +22,7 @@ class Input extends Equatable {
   final ValidationState state;
 
   const Input({
+    required this.key,
     required this.attribute,
     required this.text,
     required this.rules,
@@ -29,7 +33,6 @@ class Input extends Equatable {
   });
 
   Input runValidation(String text) {
-    ValidationState? state;
     List<String> errors = [];
 
     for (final rule in rules.call()) {
@@ -41,15 +44,10 @@ class Input extends Equatable {
 
       if (!rule.isValid(text)) {
         errors.add(rule.toString());
-        state = ValidationState.invalid;
       }
     }
 
-    return copyWith(
-      text: text,
-      errors: errors,
-      state: state ?? ValidationState.valid,
-    );
+    return copyWith(text: text, errors: errors);
   }
 
   String? get error => errors.isEmpty ? null : errors.first;
@@ -60,28 +58,12 @@ class Input extends Equatable {
 
   bool get isInvalid => state.isInvalid;
 
-  @override
-  String toString() =>
-      'Input(attribute: $attribute, value: $text, errors: $errors)';
+  Input addError(String error) => copyWith(errors: List.of(errors)..add(error));
 
-  Input addError(String error) {
-    return copyWith(
-      errors: List.of(errors)..add(error),
-      state: ValidationState.invalid,
-    );
-  }
+  Input addIgnoreValues(List<String> ignore) =>
+      copyWith(ignoreValues: List.of(ignoreValues)..addAll(ignore));
 
-  Input addIgnoreValues(List<String> ignore) {
-    return copyWith(ignoreValues: List.of(ignoreValues)..addAll(ignore));
-  }
-
-  Input clearError() {
-    return copyWith(
-      text: '',
-      errors: [],
-      state: ValidationState.invalid,
-    );
-  }
+  Input clearError() => copyWith(text: '', errors: []);
 
   Input copyWith({
     String? attribute,
@@ -90,20 +72,28 @@ class Input extends Equatable {
     bool? enabled,
     List<String>? ignoreValues,
     List<String>? errors,
-    ValidationState? state,
   }) {
+    List<String> finalErrors = errors ?? this.errors;
+
     return Input(
+      key: key,
       attribute: attribute ?? this.attribute,
       text: text ?? this.text,
       rules: rules ?? this.rules,
       enabled: enabled ?? this.enabled,
       ignoreValues: ignoreValues ?? this.ignoreValues,
-      errors: errors ?? this.errors,
-      state: state ?? this.state,
+      errors: finalErrors,
+      state: finalErrors.isNotEmpty
+          ? ValidationState.invalid
+          : ValidationState.valid,
     );
   }
 
   @override
   List<Object> get props =>
-      [attribute, text, enabled, rules, ignoreValues, errors];
+      [key, attribute, text, enabled, rules, ignoreValues, errors];
+
+  @override
+  String toString() =>
+      'Input(key: $key, attribute: $attribute, value: $text, errors: $errors)';
 }
