@@ -1,7 +1,8 @@
 name: flutter_validation_input_real_time
 description: A new Flutter plugin project.
 version: 0.0.1
-homepage:
+homepage: https://github.com/michaelnabil230/flutter_validation_input_real_time
+issue_tracker: https://github.com/michaelnabil230/flutter_validation_input_real_time/issues
 
 environment:
   sdk: '>=3.0.2 <4.0.0'
@@ -13,7 +14,6 @@ dependencies:
   
   provider: ^6.0.5
   email_validator: ^2.1.17
-  intl: ^0.18.1
   equatable: ^2.0.5
 
 dev_dependencies:
