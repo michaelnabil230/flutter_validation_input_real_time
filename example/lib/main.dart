@@ -73,7 +73,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _login() {
-    if (!_buttonController.get().passes) {
+    if (!_buttonController.get().disable) {
       log('Please fill the inputs first');
       return;
     }
@@ -134,7 +134,7 @@ class _MyAppState extends State<MyApp> {
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: _buttonController.get().passes
+                    color: _buttonController.get().disable
                         ? Colors.blue
                         : Colors.red,
                   ),

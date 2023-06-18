@@ -9,12 +9,12 @@ class ButtonController {
   ButtonController({
     required BuildContext context,
     required List<ValidationTextEditingController> inputs,
-    bool passes = false,
+    bool disable = false,
     bool isLoading = false,
   }) : _context = context {
     provider()
       ..setInputs(inputs)
-      ..setButtonData(ButtonFormData(passes: passes, isLoading: isLoading));
+      ..setButtonData(ButtonFormData(disable: disable, isLoading: isLoading));
   }
 
   ButtonProvider provider({bool listen = false}) {
@@ -26,4 +26,6 @@ class ButtonController {
   }
 
   void isLoading(bool isLoading) => provider().isLoading(isLoading);
+
+  void disable(bool disable) => provider().disable(disable);
 }

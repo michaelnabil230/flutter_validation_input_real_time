@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 class ButtonFormData extends Equatable {
   final bool isLoading;
 
-  final bool passes;
+  final bool disable;
 
   final bool isEditForm;
 
@@ -11,29 +11,29 @@ class ButtonFormData extends Equatable {
 
   const ButtonFormData({
     this.isLoading = false,
-    this.passes = false,
+    this.disable = false,
     this.isEditForm = false,
     this.errors = const {},
   });
 
   ButtonFormData copyWith({
     bool? isLoading,
-    bool? passes,
+    bool? disable,
     bool? isEditForm,
     Map<String, List<String>>? errors,
   }) {
     return ButtonFormData(
       isLoading: isLoading ?? this.isLoading,
-      passes: passes ?? this.passes,
+      disable: disable ?? this.disable,
       isEditForm: isEditForm ?? this.isEditForm,
       errors: errors ?? this.errors,
     );
   }
 
   @override
-  List<Object> get props => [isLoading, passes, isEditForm, errors];
+  List<Object> get props => [isLoading, disable, isEditForm, errors];
 
   @override
   String toString() =>
-      'ButtonFromData(isLoading: $isLoading, passes: $passes, isEditForm: $isEditForm, errors: $errors)';
+      'ButtonFromData(isLoading: $isLoading, disable: $disable, isEditForm: $isEditForm, errors: $errors)';
 }

@@ -16,7 +16,7 @@ class ButtonProvider extends ChangeNotifier {
       errors.addAll({input.input.attribute: input.input.errors});
     }
 
-    buttonFormData = buttonFormData.copyWith(passes: passes, errors: errors);
+    buttonFormData = buttonFormData.copyWith(disable: passes, errors: errors);
   }
 
   late List<ValidationTextEditingController> inputs;
@@ -29,6 +29,12 @@ class ButtonProvider extends ChangeNotifier {
 
   void isLoading(bool isLoading) {
     buttonFormData = buttonFormData.copyWith(isLoading: isLoading);
+
+    notifyListeners();
+  }
+
+  void disable(bool disable) {
+    buttonFormData = buttonFormData.copyWith(disable: disable);
 
     notifyListeners();
   }
