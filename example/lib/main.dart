@@ -113,19 +113,16 @@ class _MyAppState extends State<MyApp> {
             CustomTextField(
               controller: _emailController,
               hintText: 'Email',
-              input: _emailController.get(),
               keyboardType: TextInputType.emailAddress,
             ),
             CustomTextField(
               controller: _passwordController,
               hintText: 'Password',
-              input: _passwordController.get(),
               keyboardType: TextInputType.visiblePassword,
             ),
             CustomTextField(
               controller: _passwordConfirmationController,
               hintText: 'Password confirmation',
-              input: _passwordConfirmationController.get(),
               keyboardType: TextInputType.visiblePassword,
             ),
             Padding(
@@ -156,8 +153,6 @@ class _MyAppState extends State<MyApp> {
 }
 
 class CustomTextField extends StatelessWidget {
-  final Input input;
-
   final String hintText;
 
   final ValidationTextEditingController controller;
@@ -168,9 +163,10 @@ class CustomTextField extends StatelessWidget {
     super.key,
     required this.controller,
     required this.keyboardType,
-    required this.input,
     required this.hintText,
   });
+
+  Input get input => controller.get();
 
   @override
   Widget build(BuildContext context) {

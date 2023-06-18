@@ -45,31 +45,14 @@ class ValidationTextEditingController extends TextEditingController {
     String error, {
     bool withIgnoreValue = false,
     List<String> ignore = const [],
-  }) {
-    if (withIgnoreValue) {
-      ignore = List.of(ignore)..add(text);
-    }
+  }) =>
+      input = _inputProvider.addError(input, error);
 
-    notifyListeners();
+  void clearError() => input = _inputProvider.clearError(input);
 
-    input = input.addError(error).addIgnoreValues(ignore);
-    _buttonProvider.check();
-  }
+  void enable() => input = _inputProvider.enable(input);
 
-  void clearError() {
-    notifyListeners();
-    input = input.clearError();
-  }
-
-  void enable() {
-    notifyListeners();
-    input = input.copyWith(enabled: true);
-  }
-
-  void disable() {
-    notifyListeners();
-    input = input.copyWith(enabled: false);
-  }
+  void disable() => input = _inputProvider.disable(input);
 
   @override
   void clear() {
