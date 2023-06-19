@@ -14,14 +14,6 @@ class InputProvider extends ChangeNotifier {
     return newInput;
   }
 
-  Input clearError(Input input) {
-    Input newInput = input.clearError();
-
-    notifyListeners();
-
-    return newInput;
-  }
-
   Input runValidation(Input input, String text) {
     Input newInput = input.runValidation(text);
 

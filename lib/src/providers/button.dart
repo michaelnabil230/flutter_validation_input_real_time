@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_validation_input_real_time/flutter_validation_input_real_time.dart';
-import 'package:flutter_validation_input_real_time/src/classes/button_form_data.dart';
+import 'package:flutter_validation_input_real_time/src/classes/button_data.dart';
 
 class ButtonProvider extends ChangeNotifier {
-  late ButtonFormData buttonFormData = const ButtonFormData();
+  late ButtonData buttonData = const ButtonData();
 
   void check() {
-    bool passes = buttonFormData.isEditForm
+    bool passes = buttonData.isEditForm
         ? inputs.any((input) => input.input.isValid)
         : inputs.every((input) => input.input.isValid);
 
@@ -16,7 +16,9 @@ class ButtonProvider extends ChangeNotifier {
       errors.addAll({input.input.attribute: input.input.errors});
     }
 
-    buttonFormData = buttonFormData.copyWith(disable: passes, errors: errors);
+    ButtonState state = passes ? ButtonState.enable : ButtonState.disable;
+
+    buttonData = buttonData.copyWith(state: state, errors: errors);
   }
 
   late List<ValidationTextEditingController> inputs;
@@ -24,17 +26,11 @@ class ButtonProvider extends ChangeNotifier {
   void setInputs(List<ValidationTextEditingController> inputs) =>
       this.inputs = inputs;
 
-  void setButtonData(ButtonFormData buttonFormData) =>
-      this.buttonFormData = buttonFormData;
+  void setButtonData(ButtonData buttonData) =>
+      this.buttonData = buttonData;
 
-  void isLoading(bool isLoading) {
-    buttonFormData = buttonFormData.copyWith(isLoading: isLoading);
-
-    notifyListeners();
-  }
-
-  void disable(bool disable) {
-    buttonFormData = buttonFormData.copyWith(disable: disable);
+  void changeState(ButtonState state) {
+    buttonData = buttonData.copyWith(state: state);
 
     notifyListeners();
   }

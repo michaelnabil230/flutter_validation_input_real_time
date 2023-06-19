@@ -24,6 +24,7 @@ export 'lists/not_contains_any.dart';
 export 'lists/not_repeat_value.dart';
 
 /// * Magic
+export 'magic/is_required_when.dart';
 export 'magic/sometimes.dart';
 
 /// * Password

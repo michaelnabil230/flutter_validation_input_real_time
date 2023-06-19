@@ -1,12 +1,9 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 
 import 'package:flutter_validation_input_real_time/flutter_validation_input_real_time.dart';
-import 'package:flutter_validation_input_real_time/src/classes/validation_state.dart';
+import 'package:flutter_validation_input_real_time/src/enums/validation_state.dart';
 
 class Input extends Equatable {
-  final UniqueKey key;
-
   final String attribute;
 
   final String text;
@@ -22,7 +19,6 @@ class Input extends Equatable {
   final ValidationState state;
 
   const Input({
-    required this.key,
     required this.attribute,
     required this.text,
     required this.rules,
@@ -63,7 +59,7 @@ class Input extends Equatable {
   Input addIgnoreValues(List<String> ignore) =>
       copyWith(ignoreValues: List.of(ignoreValues)..addAll(ignore));
 
-  Input clearError() => copyWith(text: '', errors: []);
+  Input clearError() => runValidation('');
 
   Input copyWith({
     String? attribute,
@@ -72,28 +68,28 @@ class Input extends Equatable {
     bool? enabled,
     List<String>? ignoreValues,
     List<String>? errors,
+    ValidationState? state,
   }) {
     List<String> finalErrors = errors ?? this.errors;
+    ValidationState finalState = state ??
+        (finalErrors.isEmpty ? ValidationState.valid : ValidationState.invalid);
 
     return Input(
-      key: key,
       attribute: attribute ?? this.attribute,
       text: text ?? this.text,
       rules: rules ?? this.rules,
       enabled: enabled ?? this.enabled,
       ignoreValues: ignoreValues ?? this.ignoreValues,
       errors: finalErrors,
-      state: finalErrors.isNotEmpty
-          ? ValidationState.invalid
-          : ValidationState.valid,
+      state: finalState,
     );
   }
 
   @override
   List<Object> get props =>
-      [key, attribute, text, enabled, rules, ignoreValues, errors];
+      [attribute, text, enabled, rules, ignoreValues, errors];
 
   @override
   String toString() =>
-      'Input(key: $key, attribute: $attribute, value: $text, errors: $errors)';
+      'Input(attribute: $attribute, value: $text, errors: $errors)';
 }

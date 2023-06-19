@@ -73,13 +73,13 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _login() {
-    if (!_buttonController.get().disable) {
+    if (!_buttonController.get().state.isDisable) {
       log('Please fill the inputs first');
       return;
     }
 
     log('The request has ben sended in back-end');
-    _buttonController.isLoading(true);
+    _buttonController.changeState(ButtonState.loading);
 
     Future.delayed(const Duration(seconds: 5), () {
       _emailController.addError(
@@ -87,7 +87,7 @@ class _MyAppState extends State<MyApp> {
         withIgnoreValue: true,
       );
 
-      _buttonController.isLoading(false);
+      _buttonController.changeState(ButtonState.disable);
     });
   }
 
@@ -98,6 +98,8 @@ class _MyAppState extends State<MyApp> {
     _passwordConfirmationController.dispose();
     super.dispose();
   }
+
+  ButtonState get buttonState => _buttonController.get(listen: true).state;
 
   @override
   Widget build(BuildContext context) {
@@ -134,12 +136,12 @@ class _MyAppState extends State<MyApp> {
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: _buttonController.get().disable
+                    color: buttonState.isEnable
                         ? Colors.blue
                         : Colors.red,
                   ),
                   alignment: Alignment.center,
-                  child: _buttonController.get(listen: true).isLoading
+                  child: buttonState.isLoading
                       ? const Text('Login is loading....')
                       : const Text('Login'),
                 ),
