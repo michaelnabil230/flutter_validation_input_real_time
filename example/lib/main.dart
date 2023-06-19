@@ -136,9 +136,7 @@ class _MyAppState extends State<MyApp> {
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: buttonState.isEnable
-                        ? Colors.blue
-                        : Colors.red,
+                    color: buttonState.isEnable ? Colors.blue : Colors.red,
                   ),
                   alignment: Alignment.center,
                   child: buttonState.isLoading

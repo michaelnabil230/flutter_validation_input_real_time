@@ -26,8 +26,7 @@ class ButtonProvider extends ChangeNotifier {
   void setInputs(List<ValidationTextEditingController> inputs) =>
       this.inputs = inputs;
 
-  void setButtonData(ButtonData buttonData) =>
-      this.buttonData = buttonData;
+  void setButtonData(ButtonData buttonData) => this.buttonData = buttonData;
 
   void changeState(ButtonState state) {
     buttonData = buttonData.copyWith(state: state);
