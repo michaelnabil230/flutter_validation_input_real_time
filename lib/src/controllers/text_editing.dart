@@ -1,7 +1,6 @@
-import 'package:flutter_validation_input_real_time/flutter_validation_input_real_time.dart';
-import 'package:flutter_validation_input_real_time/src/enums/validation_state.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_validation_input_real_time/flutter_validation_input_real_time.dart';
+import 'package:provider/provider.dart';
 
 class ValidationTextEditingController extends TextEditingController {
   final BuildContext _context;
@@ -17,6 +16,8 @@ class ValidationTextEditingController extends TextEditingController {
     required String attribute,
     required List<Rule> Function() rules,
     bool enabled = true,
+    bool ignoreThisText = false,
+    ValidationState? state,
     super.text,
   }) : _context = context {
     input = Input(
@@ -24,7 +25,9 @@ class ValidationTextEditingController extends TextEditingController {
       text: text,
       rules: rules,
       enabled: enabled,
-      state: text.isNotEmpty ? ValidationState.valid : ValidationState.initial,
+      state: state,
+      ignoreValues: ignoreThisText ? [text] : [],
+      status: text.isEmpty ? Status.initial : Status.edit,
     );
 
     _inputProvider = _context.read<InputProvider>();
@@ -58,6 +61,11 @@ class ValidationTextEditingController extends TextEditingController {
     notifyListeners();
   }
 
+  void ignoreValues(List<String> values) {
+    input = _inputProvider.ignoreValues(input, values);
+    notifyListeners();
+  }
+
   void enable() {
     input = _inputProvider.enable(input);
     notifyListeners();
@@ -72,5 +80,10 @@ class ValidationTextEditingController extends TextEditingController {
   void clear() {
     super.clear();
     reset();
+  }
+
+  @override
+  String toString() {
+    return 'ValidationTextEditingController(input: $input)';
   }
 }

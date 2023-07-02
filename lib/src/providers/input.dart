@@ -22,6 +22,14 @@ class InputProvider extends ChangeNotifier {
     return newInput;
   }
 
+  Input ignoreValues(Input input, List<String> ignoreValues) {
+    Input newInput = input.copyWith(ignoreValues: ignoreValues);
+
+    notifyListeners();
+
+    return newInput;
+  }
+
   Input enable(Input input) {
     Input newInput = input.copyWith(enabled: true);
 

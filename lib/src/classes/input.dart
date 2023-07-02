@@ -1,10 +1,11 @@
 import 'package:equatable/equatable.dart';
 
 import 'package:flutter_validation_input_real_time/flutter_validation_input_real_time.dart';
-import 'package:flutter_validation_input_real_time/src/enums/validation_state.dart';
 
 class Input extends Equatable {
   final String attribute;
+
+  final String initText;
 
   final String text;
 
@@ -18,18 +19,28 @@ class Input extends Equatable {
 
   final ValidationState state;
 
-  const Input({
+  final Status status;
+
+  Input({
     required this.attribute,
     required this.text,
     required this.rules,
     this.enabled = true,
     this.ignoreValues = const [],
     this.errors = const [],
-    this.state = ValidationState.initial,
-  });
+    String? initText,
+    ValidationState? state,
+    this.status = Status.initial,
+  })  : initText = initText ?? text,
+        state = state ??
+            (text.isNotEmpty ? ValidationState.valid : ValidationState.initial);
 
   Input runValidation(String text) {
     List<String> errors = [];
+
+    if (text == initText && status == Status.edit) {
+      return copyWith(text: text, state: ValidationState.initial);
+    }
 
     for (final rule in rules.call()) {
       rule.initialization(attribute);
@@ -46,7 +57,7 @@ class Input extends Equatable {
     return copyWith(text: text, errors: errors);
   }
 
-  String? get error => errors.isEmpty ? null : errors.first;
+  String? get error => errors.isNotEmpty ? errors.first : null;
 
   bool get isInitial => state.isInitial;
 
@@ -77,19 +88,30 @@ class Input extends Equatable {
     return Input(
       attribute: attribute ?? this.attribute,
       text: text ?? this.text,
+      initText: initText,
       rules: rules ?? this.rules,
       enabled: enabled ?? this.enabled,
       ignoreValues: ignoreValues ?? this.ignoreValues,
+      status: status,
       errors: finalErrors,
       state: finalState,
     );
   }
 
   @override
-  List<Object> get props =>
-      [attribute, text, enabled, rules, ignoreValues, errors];
+  List<Object> get props => [
+        attribute,
+        text,
+        initText,
+        enabled,
+        rules,
+        status,
+        ignoreValues,
+        errors,
+      ];
 
   @override
-  String toString() =>
-      'Input(attribute: $attribute, value: $text, errors: $errors)';
+  String toString() {
+    return 'Input(attribute: $attribute, text: $text, state: $state, errors: $errors)';
+  }
 }
