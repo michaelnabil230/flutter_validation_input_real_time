@@ -14,8 +14,11 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late ValidationTextEditingController _emailController;
+
   late ValidationTextEditingController _passwordController;
+
   late ValidationTextEditingController _passwordConfirmationController;
+
   late ButtonController _buttonController;
 
   @override

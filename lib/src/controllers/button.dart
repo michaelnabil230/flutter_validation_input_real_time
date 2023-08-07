@@ -6,14 +6,19 @@ import 'package:provider/provider.dart';
 class ButtonController {
   final BuildContext _context;
 
+  final List<ValidationTextEditingController> _inputs;
+
+  List<ValidationTextEditingController> get inputs => _inputs;
+
   ButtonController({
     required BuildContext context,
     required List<ValidationTextEditingController> inputs,
     ButtonState state = ButtonState.disable,
     bool isEditForm = false,
-  }) : _context = context {
+  })  : _inputs = inputs,
+        _context = context {
     provider()
-      ..setInputs(inputs)
+      ..setInputs(_inputs)
       ..setButtonData(ButtonData(state: state, isEditForm: isEditForm));
   }
 
