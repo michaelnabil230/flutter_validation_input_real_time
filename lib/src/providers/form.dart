@@ -1,16 +1,16 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide FormState;
 import 'package:flutter_validation_input_real_time/flutter_validation_input_real_time.dart';
-import 'package:flutter_validation_input_real_time/src/classes/button_data.dart';
+import 'package:flutter_validation_input_real_time/src/classes/form_group.dart';
 
-class ButtonProvider extends ChangeNotifier {
-  late ButtonData buttonData = const ButtonData();
+class FormProvider extends ChangeNotifier {
+  late FormGroup formGroup = const FormGroup();
 
   late List<ValidationTextEditingController> inputs;
 
   void setInputs(List<ValidationTextEditingController> inputs) =>
       this.inputs = inputs;
 
-  void setButtonData(ButtonData buttonData) => this.buttonData = buttonData;
+  void setFormGroup(FormGroup formGroup) => this.formGroup = formGroup;
 
   void check() {
     bool passes = _isPasses();
@@ -19,13 +19,13 @@ class ButtonProvider extends ChangeNotifier {
       for (final input in inputs) input.input.attribute: input.input.errors
     };
 
-    ButtonState state = passes ? ButtonState.enable : ButtonState.disable;
+    FormState state = passes ? FormState.enable : FormState.disable;
 
-    buttonData = buttonData.copyWith(state: state, errors: errors);
+    formGroup = formGroup.copyWith(state: state, errors: errors);
   }
 
   bool _isPasses() {
-    if (buttonData.isEditForm) {
+    if (formGroup.isEdit) {
       bool noInvalid = !inputs.any((input) => input.input.isInvalid);
       bool anyValid = inputs.any((input) => input.input.isValid);
       bool anyInitial = inputs.any((input) => input.input.isInitial);
@@ -38,8 +38,8 @@ class ButtonProvider extends ChangeNotifier {
     }
   }
 
-  void changeState(ButtonState state) {
-    buttonData = buttonData.copyWith(state: state);
+  void changeState(FormState state) {
+    formGroup = formGroup.copyWith(state: state);
 
     notifyListeners();
   }

@@ -9,7 +9,7 @@ class ValidationTextEditingController extends TextEditingController {
 
   late InputProvider _inputProvider;
 
-  late ButtonProvider _buttonProvider;
+  late FormProvider _formProvider;
 
   ValidationTextEditingController({
     required BuildContext context,
@@ -31,7 +31,7 @@ class ValidationTextEditingController extends TextEditingController {
     );
 
     _inputProvider = _context.read<InputProvider>();
-    _buttonProvider = _context.read<ButtonProvider>();
+    _formProvider = _context.read<FormProvider>();
 
     addListener(runValidation);
   }
@@ -39,7 +39,7 @@ class ValidationTextEditingController extends TextEditingController {
   void runValidation() {
     input = _inputProvider.runValidation(input, text);
 
-    _buttonProvider.check();
+    _formProvider.check();
   }
 
   Input get() => _context.watch<InputProvider>().getInput(input);

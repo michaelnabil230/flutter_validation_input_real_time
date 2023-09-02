@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_validation_input_real_time/src/providers/input.dart';
-import 'package:flutter_validation_input_real_time/src/providers/button.dart';
+import 'package:flutter_validation_input_real_time/src/providers/form.dart';
 import 'package:provider/provider.dart';
 
 class ValidationInput extends StatelessWidget {
@@ -16,7 +16,7 @@ class ValidationInput extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => InputProvider()),
-        ChangeNotifierProvider(create: (_) => ButtonProvider()),
+        ChangeNotifierProvider(create: (_) => FormProvider()),
       ],
       child: child,
     );

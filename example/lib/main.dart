@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide FormState;
 import 'package:flutter_validation_input_real_time/flutter_validation_input_real_time.dart';
 
 void main() => runApp(const MaterialApp(home: ValidationInput(child: MyApp())));
@@ -19,13 +19,13 @@ class _MyAppState extends State<MyApp> {
 
   late ValidationTextEditingController _passwordConfirmationController;
 
-  late ButtonController _buttonController;
+  late FormController _formController;
 
   @override
   void initState() {
     _initTextController();
 
-    _buttonController = ButtonController(
+    _formController = FormController(
       context: context,
       inputs: [
         _emailController,
@@ -76,13 +76,13 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _login() {
-    if (!_buttonController.get().state.isDisable) {
+    if (!_formController.get().state.isDisable) {
       log('Please fill the inputs first');
       return;
     }
 
     log('The request has ben sended in back-end');
-    _buttonController.changeState(ButtonState.loading);
+    _formController.changeState(FormState.loading);
 
     Future.delayed(const Duration(seconds: 5), () {
       _emailController.addError(
@@ -90,7 +90,7 @@ class _MyAppState extends State<MyApp> {
         withIgnoreValue: true,
       );
 
-      _buttonController.changeState(ButtonState.disable);
+      _formController.changeState(FormState.disable);
     });
   }
 
@@ -102,7 +102,7 @@ class _MyAppState extends State<MyApp> {
     super.dispose();
   }
 
-  ButtonState get buttonState => _buttonController.get(listen: true).state;
+  FormState get formState => _formController.get(listen: true).state;
 
   @override
   Widget build(BuildContext context) {
@@ -139,10 +139,10 @@ class _MyAppState extends State<MyApp> {
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: buttonState.isEnable ? Colors.blue : Colors.red,
+                    color: formState.isEnable ? Colors.blue : Colors.red,
                   ),
                   alignment: Alignment.center,
-                  child: buttonState.isLoading
+                  child: formState.isLoading
                       ? const Text('Login is loading....')
                       : const Text('Login'),
                 ),
