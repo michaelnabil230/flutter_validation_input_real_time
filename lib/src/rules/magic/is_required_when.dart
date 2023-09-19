@@ -15,7 +15,7 @@ class IsRequiredWhen extends Rule {
       return IsRequired().isValid(value);
     }
 
-    return false;
+    return true;
   }
 
   @override

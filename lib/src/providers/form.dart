@@ -33,9 +33,9 @@ class FormProvider extends ChangeNotifier {
       bool noEveryInitial = !inputs.every((input) => input.input.isInitial);
 
       return noInvalid && (anyValid && anyInitial || noEveryInitial);
-    } else {
-      return inputs.every((input) => input.input.isValid);
     }
+
+    return inputs.every((input) => input.input.isValid);
   }
 
   void changeState(FormState state) {
