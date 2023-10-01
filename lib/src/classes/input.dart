@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/rendering.dart';
 
 import 'package:flutter_validation_input_real_time/flutter_validation_input_real_time.dart';
 
@@ -9,7 +10,7 @@ class Input extends Equatable {
 
   final String text;
 
-  final List<Rule> Function() rules;
+  final ValueGetter<List<Rule>> rules;
 
   final bool enabled;
 
@@ -83,7 +84,7 @@ class Input extends Equatable {
   Input copyWith({
     String? attribute,
     String? text,
-    List<Rule> Function()? rules,
+    ValueGetter<List<Rule>>? rules,
     bool? enabled,
     List<String>? ignoreValues,
     List<String>? errors,

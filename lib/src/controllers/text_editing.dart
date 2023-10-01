@@ -14,7 +14,7 @@ class ValidationTextEditingController extends TextEditingController {
   ValidationTextEditingController({
     required BuildContext context,
     required String attribute,
-    required List<Rule> Function() rules,
+    required ValueGetter<List<Rule>> rules,
     bool enabled = true,
     bool ignoreThisText = false,
     ValidationState? state,
