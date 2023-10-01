@@ -2,7 +2,7 @@ import 'package:flutter_validation_input_real_time/src/rules/rule.dart';
 
 class IsYoutubeUrl extends Rule {
   IsYoutubeUrl({
-    super.customError,
+    super.customValidationMessage,
   });
 
   @override
@@ -13,5 +13,5 @@ class IsYoutubeUrl extends Rule {
   }
 
   @override
-  String error() => 'validation.not_valid_youtube_url';
+  String get name => ValidationNames.notValidYoutubeUrl;
 }

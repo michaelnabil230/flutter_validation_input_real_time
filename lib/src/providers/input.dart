@@ -2,6 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_validation_input_real_time/flutter_validation_input_real_time.dart';
 
 class InputProvider extends ChangeNotifier {
+  final Map<String, String> validationMessages;
+
+  InputProvider(this.validationMessages);
+
   Input addError(
     Input input,
     String error, {
@@ -15,7 +19,7 @@ class InputProvider extends ChangeNotifier {
   }
 
   Input runValidation(Input input, String text) {
-    Input newInput = input.runValidation(text);
+    Input newInput = input.runValidation(text, validationMessages);
 
     notifyListeners();
 

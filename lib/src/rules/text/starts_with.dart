@@ -5,12 +5,12 @@ class StartsWith extends Rule {
 
   StartsWith(
     this.pattern, {
-    super.customError,
+    super.customValidationMessage,
   });
 
   @override
   bool isValid(String value) => value.trim().startsWith(pattern);
 
   @override
-  String error() => 'validation.starts_with';
+  String get name => ValidationNames.startsWith;
 }

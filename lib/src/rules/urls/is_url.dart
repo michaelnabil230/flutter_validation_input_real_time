@@ -2,7 +2,7 @@ import 'package:flutter_validation_input_real_time/src/rules/rule.dart';
 
 class IsUrl extends Rule {
   IsUrl({
-    super.customError,
+    super.customValidationMessage,
   });
 
   @override
@@ -13,5 +13,5 @@ class IsUrl extends Rule {
   }
 
   @override
-  String error() => 'validation.not_valid_url';
+  String get name => ValidationNames.notValidUrl;
 }

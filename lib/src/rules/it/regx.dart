@@ -5,12 +5,12 @@ class RegExpRule extends Rule {
 
   RegExpRule(
     this.regX, {
-    super.customError,
+    super.customValidationMessage,
   });
 
   @override
   bool isValid(String value) => regX.hasMatch(value);
 
   @override
-  String error() => 'validation.is_not_valid';
+  String get name => ValidationNames.isNotValid;
 }

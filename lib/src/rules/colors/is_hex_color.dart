@@ -2,7 +2,7 @@ import 'package:flutter_validation_input_real_time/src/rules/rule.dart';
 
 class IsHexColor extends Rule {
   IsHexColor({
-    super.customError,
+    super.customValidationMessage,
   });
 
   @override
@@ -12,5 +12,5 @@ class IsHexColor extends Rule {
   }
 
   @override
-  String error() => 'validation.must_be_hex_color';
+  String get name => ValidationNames.mustBeHexColor;
 }

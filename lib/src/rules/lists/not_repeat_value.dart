@@ -4,7 +4,7 @@ class NotRepeat extends Rule {
   late List<String> list;
 
   NotRepeat({
-    super.customError,
+    super.customValidationMessage,
   });
 
   void setList(List<String> list) => this.list = list;
@@ -13,5 +13,5 @@ class NotRepeat extends Rule {
   bool isValid(String value) => IsNotIn(list).isValid(value);
 
   @override
-  String error() => 'validation.not_repeat';
+  String get name => ValidationNames.notRepeat;
 }

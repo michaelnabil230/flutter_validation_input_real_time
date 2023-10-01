@@ -5,12 +5,12 @@ class MinLength extends Rule {
 
   MinLength(
     this.min, {
-    super.customError,
+    super.customValidationMessage,
   });
 
   @override
   bool isValid(String value) => value.trim().length >= min;
 
   @override
-  String error() => 'validation.min';
+  String get name => ValidationNames.min;
 }

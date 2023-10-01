@@ -5,7 +5,7 @@ class IsDateBefore extends Rule {
 
   IsDateBefore(
     this.date, {
-    super.customError,
+    super.customValidationMessage,
   });
 
   @override
@@ -16,5 +16,5 @@ class IsDateBefore extends Rule {
   }
 
   @override
-  String error() => 'validation.must_be_before_date';
+  String get name => ValidationNames.mustBeBeforeDate;
 }

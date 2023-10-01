@@ -3,7 +3,17 @@ import 'dart:developer';
 import 'package:flutter/material.dart' hide FormState;
 import 'package:flutter_validation_input_real_time/flutter_validation_input_real_time.dart';
 
-void main() => runApp(const MaterialApp(home: ValidationInput(child: MyApp())));
+void main() {
+  runApp(const MaterialApp(
+    home: ValidationInput(
+      validationMessages: {
+        ValidationNames.required: 'Field is required',
+        'customValidation': 'This failed is a custom validation',
+      },
+      child: MyApp(),
+    ),
+  ));
+}
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -41,37 +51,31 @@ class _MyAppState extends State<MyApp> {
     _emailController = ValidationTextEditingController(
       context: context,
       attribute: 'email',
-      rules: () {
-        return [
-          IsRequired(),
-          NotRepeat(),
-          IsEmail(),
-        ];
-      },
+      rules: () => [
+        Required(customValidationMessage: (value) => 'Email is required field'),
+        NotRepeat(),
+        IsEmail(),
+      ],
     );
 
     _passwordController = ValidationTextEditingController(
       context: context,
       attribute: 'password',
-      rules: () {
-        return [
-          IsRequired(),
-          Password(min: 3),
-          Same(_passwordConfirmationController.text),
-        ];
-      },
+      rules: () => [
+        Required(),
+        Password(min: 3),
+        Same(_passwordConfirmationController.text),
+      ],
     );
 
     _passwordConfirmationController = ValidationTextEditingController(
       context: context,
       attribute: 'password_confirmation',
-      rules: () {
-        return [
-          IsRequired(),
-          Password(min: 3),
-          Same(_passwordController.text),
-        ];
-      },
+      rules: () => [
+        Required(),
+        Password(min: 3),
+        Same(_passwordController.text),
+      ],
     );
   }
 

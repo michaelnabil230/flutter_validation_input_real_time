@@ -5,7 +5,7 @@ class MinValue extends Rule {
 
   MinValue(
     this.min, {
-    super.customError,
+    super.customValidationMessage,
   });
 
   @override
@@ -16,5 +16,5 @@ class MinValue extends Rule {
   }
 
   @override
-  String error() => 'validation.must_be_min';
+  String get name => ValidationNames.mustBeMin;
 }

@@ -6,12 +6,12 @@ class IsNotIn extends Rule {
 
   IsNotIn(
     this.list, {
-    super.customError,
+    super.customValidationMessage,
   });
 
   @override
   bool isValid(String value) => !isIn(value, list);
 
   @override
-  String error() => 'validation.must_not_be_in_list';
+  String get name => ValidationNames.mustNotBeInList;
 }

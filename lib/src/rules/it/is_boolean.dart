@@ -2,7 +2,7 @@ import 'package:flutter_validation_input_real_time/src/rules/rule.dart';
 
 class IsBool extends Rule {
   IsBool({
-    super.customError,
+    super.customValidationMessage,
   });
 
   @override
@@ -12,5 +12,5 @@ class IsBool extends Rule {
   }
 
   @override
-  String error() => 'validation.is_not_bool';
+  String get name => ValidationNames.isNotBool;
 }

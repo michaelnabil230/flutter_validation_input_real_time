@@ -5,12 +5,12 @@ class NotContains extends Rule {
 
   NotContains(
     this.other, {
-    super.customError,
+    super.customValidationMessage,
   });
 
   @override
   bool isValid(String value) => !value.trim().contains(other);
 
   @override
-  String error() => 'validation.not_contains';
+  String get name => ValidationNames.notContains;
 }

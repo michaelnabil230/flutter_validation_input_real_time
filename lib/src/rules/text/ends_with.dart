@@ -5,12 +5,12 @@ class EndsWith extends Rule {
 
   EndsWith(
     this.end, {
-    super.customError,
+    super.customValidationMessage,
   });
 
   @override
   bool isValid(String value) => value.trim().endsWith(end);
 
   @override
-  String error() => 'validation.must_end_with';
+  String get name => ValidationNames.mustEndWith;
 }

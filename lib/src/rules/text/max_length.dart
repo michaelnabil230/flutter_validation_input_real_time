@@ -5,12 +5,12 @@ class MaxLength extends Rule {
 
   MaxLength(
     this.max, {
-    super.customError,
+    super.customValidationMessage,
   });
 
   @override
   bool isValid(String value) => value.trim().length <= max;
 
   @override
-  String error() => 'validation.max';
+  String get name => ValidationNames.max;
 }

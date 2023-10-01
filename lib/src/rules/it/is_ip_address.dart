@@ -2,7 +2,7 @@ import 'package:flutter_validation_input_real_time/src/rules/rule.dart';
 
 class IsIpAddress extends Rule {
   IsIpAddress({
-    super.customError,
+    super.customValidationMessage,
   });
 
   @override
@@ -28,5 +28,5 @@ class IsIpAddress extends Rule {
   }
 
   @override
-  String error() => 'validation.is_ip_address';
+  String get name => ValidationNames.isIpAddress;
 }

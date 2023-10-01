@@ -5,7 +5,7 @@ class IsDateAfter extends Rule {
 
   IsDateAfter(
     this.date, {
-    super.customError,
+    super.customValidationMessage,
   });
 
   @override
@@ -16,5 +16,5 @@ class IsDateAfter extends Rule {
   }
 
   @override
-  String error() => 'validation.must_be_after_date';
+  String get name => ValidationNames.mustBeAfterDate;
 }

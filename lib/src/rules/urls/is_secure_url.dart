@@ -2,7 +2,7 @@ import 'package:flutter_validation_input_real_time/src/rules/rule.dart';
 
 class IsSecureUrl extends Rule {
   IsSecureUrl({
-    super.customError,
+    super.customValidationMessage,
   });
 
   @override
@@ -13,5 +13,5 @@ class IsSecureUrl extends Rule {
   }
 
   @override
-  String error() => 'validation.is_not_secure_url';
+  String get name => ValidationNames.isNotSecureUrl;
 }

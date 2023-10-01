@@ -2,7 +2,7 @@ import 'package:flutter_validation_input_real_time/src/rules/rule.dart';
 
 class IsSaudiPhone extends Rule {
   IsSaudiPhone({
-    super.customError,
+    super.customValidationMessage,
   });
 
   @override
@@ -11,5 +11,5 @@ class IsSaudiPhone extends Rule {
           .hasMatch(value);
 
   @override
-  String error() => 'validation.is_saudi_phone';
+  String get name => ValidationNames.isSaudiPhone;
 }

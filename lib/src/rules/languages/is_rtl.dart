@@ -2,7 +2,7 @@ import 'package:flutter_validation_input_real_time/src/rules/rule.dart';
 
 class IsRtl extends Rule {
   IsRtl({
-    super.customError,
+    super.customValidationMessage,
   });
 
   @override
@@ -12,5 +12,5 @@ class IsRtl extends Rule {
   }
 
   @override
-  String error() => 'validation.must_be_arabic';
+  String get name => ValidationNames.mustBeArabic;
 }

@@ -5,12 +5,12 @@ class Contains extends Rule {
 
   Contains(
     this.other, {
-    super.customError,
+    super.customValidationMessage,
   });
 
   @override
   bool isValid(String value) => value.trim().contains(other);
 
   @override
-  String error() => 'validation.is_it_contains';
+  String get name => ValidationNames.isItContains;
 }

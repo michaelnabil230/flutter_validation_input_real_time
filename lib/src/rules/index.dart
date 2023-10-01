@@ -24,7 +24,7 @@ export 'lists/not_contains_any.dart';
 export 'lists/not_repeat_value.dart';
 
 /// * Magic
-export 'magic/is_required_when.dart';
+export 'magic/required_when.dart';
 export 'magic/sometimes.dart';
 
 /// * Password
@@ -45,7 +45,7 @@ export 'phone/is_ksa_phone.dart';
 export 'text/contains.dart';
 export 'text/ends_with.dart';
 export 'text/is_empty.dart';
-export 'text/is_required.dart';
+export 'text/required.dart';
 export 'text/match.dart';
 export 'text/max_length.dart';
 export 'text/min_length.dart';

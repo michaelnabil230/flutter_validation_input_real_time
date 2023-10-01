@@ -5,12 +5,12 @@ class Same extends Rule {
 
   Same(
     this.same, {
-    super.customError,
+    super.customValidationMessage,
   });
 
   @override
   bool isValid(String value) => value == same;
 
   @override
-  String error() => 'validation.same';
+  String get name => ValidationNames.same;
 }

@@ -6,11 +6,11 @@ class NotContainsAny extends Rule {
 
   NotContainsAny(
     this.list, {
-    super.customError,
+    super.customValidationMessage,
   });
 
   @override
-  String error() => 'validation.must_not_contains_any';
+  String get name => ValidationNames.mustNotContainsAny;
 
   @override
   bool isValid(String value) => !containsAny(value, list);

@@ -2,7 +2,7 @@ import 'package:flutter_validation_input_real_time/src/rules/rule.dart';
 
 class IsPort extends Rule {
   IsPort({
-    super.customError,
+    super.customValidationMessage,
   });
 
   @override
@@ -16,5 +16,5 @@ class IsPort extends Rule {
   }
 
   @override
-  String error() => 'validation.is_not_port';
+  String get name => ValidationNames.isNotPort;
 }

@@ -2,6 +2,7 @@ library flutter_validation_input_real_time;
 
 export 'package:flutter_validation_input_real_time/src/rules/index.dart';
 export 'package:flutter_validation_input_real_time/src/classes/input.dart';
+export 'package:flutter_validation_input_real_time/src/classes/validation_names.dart';
 export 'package:flutter_validation_input_real_time/src/providers/input.dart';
 export 'package:flutter_validation_input_real_time/src/providers/form.dart';
 export 'package:flutter_validation_input_real_time/src/validation_input.dart';

@@ -6,12 +6,12 @@ class ConfirmedPassword extends Rule {
 
   ConfirmedPassword(
     this.other, {
-    super.customError,
+    super.customValidationMessage,
   });
 
   @override
   bool isValid(String value) => Same(other).isValid(value);
 
   @override
-  String error() => 'validation.confirmed_password';
+  String get name => ValidationNames.confirmedPassword;
 }

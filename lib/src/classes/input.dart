@@ -35,7 +35,7 @@ class Input extends Equatable {
         state = state ??
             (text.isNotEmpty ? ValidationState.valid : ValidationState.initial);
 
-  Input runValidation(String text) {
+  Input runValidation(String text, Map<String, String> validationMessages) {
     List<String> errors = [];
 
     if (text == initText && status == Status.edit) {
@@ -43,14 +43,22 @@ class Input extends Equatable {
     }
 
     for (final rule in rules.call()) {
-      rule.initialization(attribute);
+      rule.initialization(text, attribute);
 
       if (rule is NotRepeat) {
         rule.setList(ignoreValues);
       }
 
       if (!rule.isValid(text)) {
-        errors.add(rule.toString());
+        String error = rule.toString();
+
+        if (error == rule.name) {
+          String? customMassage = validationMessages[rule.name];
+
+          error = customMassage ?? error;
+        }
+
+        errors.add(error);
       }
     }
 
@@ -70,7 +78,7 @@ class Input extends Equatable {
   Input addIgnoreValues(List<String> ignore) =>
       copyWith(ignoreValues: List.of(ignoreValues)..addAll(ignore));
 
-  Input clearError() => runValidation('');
+  Input clearError() => runValidation('', {});
 
   Input copyWith({
     String? attribute,

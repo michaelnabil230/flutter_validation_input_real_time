@@ -5,14 +5,14 @@ class IsIn extends Rule {
 
   IsIn(
     this.list, {
-    super.customError,
+    super.customValidationMessage,
   });
 
   @override
   bool isValid(String value) => isIn(value, list);
 
   @override
-  String error() => 'validation.must_be_in_list';
+  String get name => ValidationNames.mustBeInList;
 }
 
 bool isIn(String v, List<String> list) => list.any((e) => e.compareTo(v) == 0);

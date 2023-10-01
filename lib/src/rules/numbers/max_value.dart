@@ -5,7 +5,7 @@ class MaxValue extends Rule {
 
   MaxValue(
     this.max, {
-    super.customError,
+    super.customValidationMessage,
   });
 
   @override
@@ -16,5 +16,5 @@ class MaxValue extends Rule {
   }
 
   @override
-  String error() => 'validation.must_be_max';
+  String get name => ValidationNames.mustBeMax;
 }
