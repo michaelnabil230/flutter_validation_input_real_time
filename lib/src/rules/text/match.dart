@@ -17,6 +17,13 @@ class Match extends Rule {
 
   @override
   String get name => ValidationNames.shouldMatch;
+
+  @override
+  String get error {
+    return customValidationMessage == null
+        ? defaultValidationMessages[name]!.call(attribute, [other])
+        : customValidationMessage!.call(attribute, [other]);
+  }
 }
 
 bool _match(

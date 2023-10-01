@@ -10,4 +10,11 @@ class Required extends Rule {
 
   @override
   String get name => ValidationNames.required;
+
+  @override
+  String get error {
+    return customValidationMessage == null
+        ? defaultValidationMessages[name]!.call(attribute)
+        : customValidationMessage!.call(attribute);
+  }
 }

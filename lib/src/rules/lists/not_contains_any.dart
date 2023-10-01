@@ -10,8 +10,15 @@ class NotContainsAny extends Rule {
   });
 
   @override
+  bool isValid(String value) => !containsAny(value, list);
+
+  @override
   String get name => ValidationNames.mustNotContainsAny;
 
   @override
-  bool isValid(String value) => !containsAny(value, list);
+  String get error {
+    return customValidationMessage == null
+        ? defaultValidationMessages[name]!.call(attribute, [list])
+        : customValidationMessage!.call(attribute, [list]);
+  }
 }

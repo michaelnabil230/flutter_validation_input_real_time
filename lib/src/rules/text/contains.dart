@@ -13,4 +13,11 @@ class Contains extends Rule {
 
   @override
   String get name => ValidationNames.isItContains;
+
+  @override
+  String get error {
+    return customValidationMessage == null
+        ? defaultValidationMessages[name]!.call(attribute, [other])
+        : customValidationMessage!.call(attribute, [other]);
+  }
 }

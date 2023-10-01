@@ -17,4 +17,11 @@ class IsDateAfter extends Rule {
 
   @override
   String get name => ValidationNames.mustBeAfterDate;
+
+  @override
+  String get error {
+    return customValidationMessage == null
+        ? defaultValidationMessages[name]!.call(attribute, [date])
+        : customValidationMessage!.call(attribute, [date]);
+  }
 }

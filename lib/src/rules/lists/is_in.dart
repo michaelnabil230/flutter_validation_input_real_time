@@ -13,6 +13,13 @@ class IsIn extends Rule {
 
   @override
   String get name => ValidationNames.mustBeInList;
+
+  @override
+  String get error {
+    return customValidationMessage == null
+        ? defaultValidationMessages[name]!.call(attribute, [list])
+        : customValidationMessage!.call(attribute, [list]);
+  }
 }
 
 bool isIn(String v, List<String> list) => list.any((e) => e.compareTo(v) == 0);

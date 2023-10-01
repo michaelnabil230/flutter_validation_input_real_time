@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_validation_input_real_time/src/providers/input.dart';
-import 'package:flutter_validation_input_real_time/src/providers/form.dart';
+import 'package:flutter_validation_input_real_time/flutter_validation_input_real_time.dart';
 import 'package:provider/provider.dart';
 
 class ValidationInput extends StatelessWidget {
   final Widget child;
 
-  final Map<String, String> validationMessages;
+  final Map<String, ValidationMessage> validationMessages;
 
   const ValidationInput({
     super.key,

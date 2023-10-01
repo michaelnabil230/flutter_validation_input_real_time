@@ -13,4 +13,11 @@ class StartsWith extends Rule {
 
   @override
   String get name => ValidationNames.startsWith;
+
+  @override
+  String get error {
+    return customValidationMessage == null
+        ? defaultValidationMessages[name]!.call(attribute, [pattern])
+        : customValidationMessage!.call(attribute, [pattern]);
+  }
 }

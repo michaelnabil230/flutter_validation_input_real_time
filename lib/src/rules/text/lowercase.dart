@@ -10,4 +10,11 @@ class Lowercase extends Rule {
 
   @override
   String get name => ValidationNames.lowercase;
+
+  @override
+  String get error {
+    return customValidationMessage == null
+        ? defaultValidationMessages[name]!.call(attribute)
+        : customValidationMessage!.call(attribute);
+  }
 }

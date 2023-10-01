@@ -11,4 +11,11 @@ class IsEmail extends Rule {
 
   @override
   String get name => ValidationNames.isNotEmailAddress;
+
+  @override
+  String get error {
+    return customValidationMessage == null
+        ? defaultValidationMessages[name]!.call(attribute)
+        : customValidationMessage!.call(attribute);
+  }
 }

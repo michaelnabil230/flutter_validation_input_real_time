@@ -17,4 +17,11 @@ class MaxValue extends Rule {
 
   @override
   String get name => ValidationNames.mustBeMax;
+
+  @override
+  String get error {
+    return customValidationMessage == null
+        ? defaultValidationMessages[name]!.call(attribute, [max])
+        : customValidationMessage!.call(attribute, [max]);
+  }
 }

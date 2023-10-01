@@ -14,4 +14,11 @@ class IsNotIn extends Rule {
 
   @override
   String get name => ValidationNames.mustNotBeInList;
+
+  @override
+  String get error {
+    return customValidationMessage == null
+        ? defaultValidationMessages[name]!.call(attribute, [list])
+        : customValidationMessage!.call(attribute, [list]);
+  }
 }

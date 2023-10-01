@@ -22,31 +22,38 @@ class Password extends Rule {
 
   late String _message;
 
+  late String _error;
+
   @override
   bool isValid(String value) {
     if (!MinLength(min).isValid(value)) {
       _message = ValidationNames.passwordMin;
+      _error = _formatError([min]);
       return false;
     }
 
     if (lowercase && !Lowercase().isValid(value)) {
       _message = ValidationNames.passwordLowercase;
+      _error = _formatError();
       return false;
     }
 
     if (uppercase && !Uppercase().isValid(value)) {
       _message = ValidationNames.passwordUppercase;
+      _error = _formatError();
       return false;
     }
 
     if (specialCharacters &&
         !RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
       _message = ValidationNames.passwordSpecialCharacters;
+      _error = _formatError();
       return false;
     }
 
     if (numbers && !RegExp('[0-9]').hasMatch(value)) {
       _message = ValidationNames.passwordNumbers;
+      _error = _formatError();
       return false;
     }
 
@@ -55,4 +62,13 @@ class Password extends Rule {
 
   @override
   String get name => _message;
+
+  @override
+  String get error => _error;
+
+  String _formatError([List parameters = const []]) {
+    return _error = customValidationMessage == null
+        ? defaultValidationMessages[name]!.call(attribute, parameters)
+        : customValidationMessage!.call(attribute, parameters);
+  }
 }

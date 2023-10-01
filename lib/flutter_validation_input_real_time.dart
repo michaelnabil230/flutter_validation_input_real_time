@@ -7,6 +7,7 @@ export 'package:flutter_validation_input_real_time/src/providers/input.dart';
 export 'package:flutter_validation_input_real_time/src/providers/form.dart';
 export 'package:flutter_validation_input_real_time/src/validation_input.dart';
 export 'package:flutter_validation_input_real_time/src/rules/rule.dart';
+export 'package:flutter_validation_input_real_time/src/types/index.dart';
 export 'package:flutter_validation_input_real_time/src/controllers/form.dart';
 export 'package:flutter_validation_input_real_time/src/controllers/text_editing.dart';
 export 'package:flutter_validation_input_real_time/src/enums/form_state.dart';

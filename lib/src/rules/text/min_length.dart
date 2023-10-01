@@ -13,4 +13,11 @@ class MinLength extends Rule {
 
   @override
   String get name => ValidationNames.min;
+
+  @override
+  String get error {
+    return customValidationMessage == null
+        ? defaultValidationMessages[name]!.call(attribute, [min])
+        : customValidationMessage!.call(attribute, [min]);
+  }
 }

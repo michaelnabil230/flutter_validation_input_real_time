@@ -36,7 +36,8 @@ class Input extends Equatable {
         state = state ??
             (text.isNotEmpty ? ValidationState.valid : ValidationState.initial);
 
-  Input runValidation(String text, Map<String, String> validationMessages) {
+  Input runValidation(
+      String text, Map<String, ValidationMessage> validationMessages) {
     List<String> errors = [];
 
     if (text == initText && status == Status.edit) {
@@ -44,22 +45,22 @@ class Input extends Equatable {
     }
 
     for (final rule in rules.call()) {
-      rule.initialization(text, attribute);
+      rule.initialization(attribute);
 
       if (rule is NotRepeat) {
         rule.setList(ignoreValues);
       }
 
       if (!rule.isValid(text)) {
-        String error = rule.toString();
+        if (rule.customValidationMessage == null) {
+          final validationMessage = validationMessages[rule.name];
 
-        if (error == rule.name) {
-          String? customMassage = validationMessages[rule.name];
-
-          error = customMassage ?? error;
+          if (validationMessage != null) {
+            rule.setCustomValidationMessage(validationMessage);
+          }
         }
 
-        errors.add(error);
+        errors.add(rule.error);
       }
     }
 

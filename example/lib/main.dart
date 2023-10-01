@@ -4,13 +4,15 @@ import 'package:flutter/material.dart' hide FormState;
 import 'package:flutter_validation_input_real_time/flutter_validation_input_real_time.dart';
 
 void main() {
-  runApp(const MaterialApp(
+  runApp(MaterialApp(
     home: ValidationInput(
       validationMessages: {
-        ValidationNames.required: 'Field is required',
-        'customValidation': 'This failed is a custom validation',
+        ValidationNames.required: (attribute, [_ = const []]) =>
+            '$attribute is required from home',
+        'customValidation': (attribute, [_ = const []]) =>
+            'This failed is a custom validation',
       },
-      child: MyApp(),
+      child: const MyApp(),
     ),
   ));
 }
@@ -52,7 +54,9 @@ class _MyAppState extends State<MyApp> {
       context: context,
       attribute: 'email',
       rules: () => [
-        Required(customValidationMessage: (value) => 'Email is required field'),
+        Required(
+            customValidationMessage: (attribute, [_ = const []]) =>
+                'Email is required field'),
         NotRepeat(),
         IsEmail(),
       ],

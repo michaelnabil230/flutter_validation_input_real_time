@@ -13,4 +13,11 @@ class Same extends Rule {
 
   @override
   String get name => ValidationNames.same;
+
+  @override
+  String get error {
+    return customValidationMessage == null
+        ? defaultValidationMessages[name]!.call(attribute, [same])
+        : customValidationMessage!.call(attribute, [same]);
+  }
 }

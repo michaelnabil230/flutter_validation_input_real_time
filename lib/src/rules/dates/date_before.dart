@@ -17,4 +17,11 @@ class IsDateBefore extends Rule {
 
   @override
   String get name => ValidationNames.mustBeBeforeDate;
+
+  @override
+  String get error {
+    return customValidationMessage == null
+        ? defaultValidationMessages[name]!.call(attribute, [date])
+        : customValidationMessage!.call(attribute, [date]);
+  }
 }

@@ -14,7 +14,7 @@ void main() {
     test('should throw an exception when calling toString()', () {
       final rule = Sometimes();
 
-      expect(() => rule.toString(), throwsException);
+      expect(() => rule.error, throwsException);
     });
   });
 }

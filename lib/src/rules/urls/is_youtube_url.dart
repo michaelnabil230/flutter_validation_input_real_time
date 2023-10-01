@@ -14,4 +14,11 @@ class IsYoutubeUrl extends Rule {
 
   @override
   String get name => ValidationNames.notValidYoutubeUrl;
+
+  @override
+  String get error {
+    return customValidationMessage == null
+        ? defaultValidationMessages[name]!.call(attribute)
+        : customValidationMessage!.call(attribute);
+  }
 }

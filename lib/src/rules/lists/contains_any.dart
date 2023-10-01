@@ -17,6 +17,13 @@ class ContainsAny extends Rule {
 
   @override
   String get name => ValidationNames.mustContainsAny;
+
+  @override
+  String get error {
+    return customValidationMessage == null
+        ? defaultValidationMessages[name]!.call(attribute, [list])
+        : customValidationMessage!.call(attribute, [list]);
+  }
 }
 
 bool containsAny(

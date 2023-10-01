@@ -10,4 +10,11 @@ class IsUserName extends Rule {
 
   @override
   String get name => ValidationNames.username;
+
+  @override
+  String get error {
+    return customValidationMessage == null
+        ? defaultValidationMessages[name]!.call(attribute)
+        : customValidationMessage!.call(attribute);
+  }
 }

@@ -10,4 +10,11 @@ class Uppercase extends Rule {
 
   @override
   String get name => ValidationNames.uppercase;
+
+  @override
+  String get error {
+    return customValidationMessage == null
+        ? defaultValidationMessages[name]!.call(attribute)
+        : customValidationMessage!.call(attribute);
+  }
 }

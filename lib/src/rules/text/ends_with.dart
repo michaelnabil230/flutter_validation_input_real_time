@@ -13,4 +13,11 @@ class EndsWith extends Rule {
 
   @override
   String get name => ValidationNames.mustEndWith;
+
+  @override
+  String get error {
+    return customValidationMessage == null
+        ? defaultValidationMessages[name]!.call(attribute, [end])
+        : customValidationMessage!.call(attribute, [end]);
+  }
 }

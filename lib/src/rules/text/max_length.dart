@@ -13,4 +13,11 @@ class MaxLength extends Rule {
 
   @override
   String get name => ValidationNames.max;
+
+  @override
+  String get error {
+    return customValidationMessage == null
+        ? defaultValidationMessages[name]!.call(attribute, [max])
+        : customValidationMessage!.call(attribute, [max]);
+  }
 }

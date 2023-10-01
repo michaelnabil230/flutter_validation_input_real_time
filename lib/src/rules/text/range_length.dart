@@ -20,4 +20,11 @@ class RangeLength extends Rule {
 
   @override
   String get name => ValidationNames.mustBeRange;
+
+  @override
+  String get error {
+    return customValidationMessage == null
+        ? defaultValidationMessages[name]!.call(attribute, [min, max])
+        : customValidationMessage!.call(attribute, [min, max]);
+  }
 }

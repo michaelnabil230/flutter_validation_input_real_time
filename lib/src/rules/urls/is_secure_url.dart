@@ -14,4 +14,11 @@ class IsSecureUrl extends Rule {
 
   @override
   String get name => ValidationNames.isNotSecureUrl;
+
+  @override
+  String get error {
+    return customValidationMessage == null
+        ? defaultValidationMessages[name]!.call(attribute)
+        : customValidationMessage!.call(attribute);
+  }
 }

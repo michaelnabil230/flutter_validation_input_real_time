@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_validation_input_real_time/flutter_validation_input_real_time.dart';
 
 class InputProvider extends ChangeNotifier {
-  final Map<String, String> validationMessages;
+  final Map<String, ValidationMessage> validationMessages;
 
   InputProvider(this.validationMessages);
 

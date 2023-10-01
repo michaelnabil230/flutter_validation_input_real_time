@@ -10,4 +10,11 @@ class IsNumbersOnly extends Rule {
 
   @override
   String get name => ValidationNames.isNumbersOnly;
+
+  @override
+  String get error {
+    return customValidationMessage == null
+        ? defaultValidationMessages[name]!.call(attribute)
+        : customValidationMessage!.call(attribute);
+  }
 }

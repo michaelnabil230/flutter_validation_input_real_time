@@ -20,4 +20,11 @@ class RequiredWhen extends Rule {
 
   @override
   String get name => ValidationNames.requiredWhen;
+
+  @override
+  String get error {
+    return customValidationMessage == null
+        ? defaultValidationMessages[name]!.call(attribute, [boolean])
+        : customValidationMessage!.call(attribute, [boolean]);
+  }
 }

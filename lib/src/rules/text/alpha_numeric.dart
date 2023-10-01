@@ -10,4 +10,11 @@ class AlphaNumeric extends Rule {
 
   @override
   String get name => ValidationNames.alphaNumeric;
+
+  @override
+  String get error {
+    return customValidationMessage == null
+        ? defaultValidationMessages[name]!.call(attribute)
+        : customValidationMessage!.call(attribute);
+  }
 }

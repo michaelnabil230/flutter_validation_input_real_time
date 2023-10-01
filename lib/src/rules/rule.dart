@@ -1,11 +1,10 @@
-import 'package:flutter_validation_input_real_time/src/classes/default_validation_messages.dart';
+import 'package:flutter_validation_input_real_time/src/types/index.dart';
 
 export 'package:flutter_validation_input_real_time/src/classes/validation_names.dart';
-
-typedef ValidationMessage = String Function(String value);
+export 'package:flutter_validation_input_real_time/src/classes/default_validation_messages.dart';
 
 abstract class Rule {
-  final ValidationMessage? customValidationMessage;
+  ValidationMessage? customValidationMessage;
 
   Rule({
     this.customValidationMessage,
@@ -13,22 +12,14 @@ abstract class Rule {
 
   late String attribute;
 
-  late String _value;
-
-  void initialization(String value, String attribute) {
-    _value = value;
-    this.attribute = attribute;
-  }
+  void initialization(String attribute) => this.attribute = attribute;
 
   bool isValid(String value);
 
+  void setCustomValidationMessage(ValidationMessage callBack) =>
+      customValidationMessage = callBack;
+
   String get name;
 
-  @override
-  String toString() {
-    return customValidationMessage == null
-        ? DefaultValidationMessages.messages[name] ??
-            'ERROR: Not found this validation message'
-        : customValidationMessage!.call(_value);
-  }
+  String get error;
 }

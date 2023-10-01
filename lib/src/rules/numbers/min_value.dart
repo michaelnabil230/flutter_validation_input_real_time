@@ -17,4 +17,11 @@ class MinValue extends Rule {
 
   @override
   String get name => ValidationNames.mustBeMin;
+
+  @override
+  String get error {
+    return customValidationMessage == null
+        ? defaultValidationMessages[name]!.call(attribute, [min])
+        : customValidationMessage!.call(attribute, [min]);
+  }
 }
