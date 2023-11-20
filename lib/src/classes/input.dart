@@ -37,7 +37,9 @@ class Input extends Equatable {
             (text.isNotEmpty ? ValidationState.valid : ValidationState.initial);
 
   Input runValidation(
-      String text, Map<String, ValidationMessage> validationMessages) {
+    String text,
+    Map<String, ValidationMessage> validationMessages,
+  ) {
     List<String> errors = [];
 
     if (text == initText && status == Status.edit) {

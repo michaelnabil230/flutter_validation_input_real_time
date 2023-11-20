@@ -4,9 +4,12 @@ import 'package:flutter_validation_input_real_time/src/rules/text/required.dart'
 class RequiredWhen extends Rule {
   final bool boolean;
 
+  final String conditionName;
+
   RequiredWhen({
     super.customValidationMessage,
     required this.boolean,
+    required this.conditionName,
   });
 
   @override
@@ -24,7 +27,7 @@ class RequiredWhen extends Rule {
   @override
   String get error {
     return customValidationMessage == null
-        ? defaultValidationMessages[name]!.call(attribute, [boolean])
-        : customValidationMessage!.call(attribute, [boolean]);
+        ? defaultValidationMessages[name]!.call(attribute, [conditionName])
+        : customValidationMessage!.call(attribute, [conditionName]);
   }
 }

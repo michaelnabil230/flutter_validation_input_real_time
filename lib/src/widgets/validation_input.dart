@@ -15,12 +15,8 @@ class ValidationInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-            create: (_) => InputProvider(validationMessages)),
-        ChangeNotifierProvider(create: (_) => FormProvider()),
-      ],
+    return ChangeNotifierProvider(
+      create: (_) => InputProvider(validationMessages),
       child: child,
     );
   }
